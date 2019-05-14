@@ -29,6 +29,10 @@ class Ball
 
         void wallCollision();
 
+        int vSignX();
+
+        int vSignY();
+
     private:
     
         float collisionAngle(Ball& ball2);

@@ -81,6 +81,20 @@ void Ball::wallCollision() {
 
 // -------------------------------------------------------------------------------
 
+void Ball::vSignX() {
+    if(this->vX >= 0) return 1;
+    return -1;
+}
+
+// -------------------------------------------------------------------------------
+
+void Ball::vSignY() {
+    if(this->vY >= 0) return 1;
+    return -1;
+}
+
+// -------------------------------------------------------------------------------
+
 float Ball::collisionAngle(Ball& ball2) {
     return atan2(this->dy, this->dx);
 }
@@ -102,20 +116,20 @@ float Ball::getCenterDistance(int dx, int dy) {
 
 void Ball::unstuck(Ball& ball2, float sinTheta, float cosTheta) {
     // Testando
-    /*
+
     // Solução 1: 
     float intersec = BALL_DIAMETER - this->getCenterDistance(this->dx, this->dy);
 
     int moveX = ceil(intersec*cosTheta/2);
     int moveY = ceil(intersec*sinTheta/2);
 
-    this->posX += moveX;
-    this->posY += moveY;
+    this->posX += this->vSignX()*moveX;
+    this->posY += this->vSignY()*moveY;
 
-    ball2.posX -= moveX;
-    ball2.posY -= moveY;
-    */
+    ball2.posX -= ball2.vSignX()*moveX;
+    ball2.posY -= ball2.vSignY()*moveY;
 
+   /*
     // talvez isso n funcione
     float posX1 = this->posX*cosTheta + this->posY*sinTheta;
     float posX2 = ball2.posX*cosTheta + ball2.posY*sinTheta;
@@ -133,7 +147,7 @@ void Ball::unstuck(Ball& ball2, float sinTheta, float cosTheta) {
 
     ball2.posX = posX2*cosTheta - posY2*sinTheta;
     ball2.posY = posX2*sinTheta + posY2*cosTheta;
-
+    */
 }
 
 // -------------------------------------------------------------------------------
