@@ -1,4 +1,6 @@
 
+#include <SDL2.h>
+
 #include <vector>
 #include <iostream>
 #include <stdlib.h>
@@ -10,6 +12,7 @@
 
 #include "Player.h"
 
+extern SDL_Renderer* gRenderer;
 extern std::vector<Ball> gBalls;
 extern int gScreenSize[];
 extern int gMinPoint[];
@@ -103,7 +106,7 @@ void Player::drawLine(int mouseClickX, int mouseClickY, int mouseMotionX, int mo
                             DEFAULT_LINE_COLOR[1],
                             DEFAULT_LINE_COLOR[2],
                             DEFAULT_LINE_COLOR[3]);
-    SDL_RenderDrawLine(gRenderer, mouseClickX, mouseClickY, e.motion.x, e.motion.y); // FIXME!
+    SDL_RenderDrawLine(gRenderer, mouseClickX, mouseClickY, mouseMotionX, mouseMotionY); // FIXME!
 }
 
 // -----------------------------------------------------------------------

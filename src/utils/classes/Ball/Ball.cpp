@@ -123,11 +123,11 @@ void Ball::unstuck(Ball& ball2, float sinTheta, float cosTheta) {
     int moveX = ceil(intersec*cosTheta/2);
     int moveY = ceil(intersec*sinTheta/2);
 
-    this->posX += this->vSignX()*moveX;
-    this->posY += this->vSignY()*moveY;
+    this->posX += moveX;
+    this->posY += moveY;
 
-    ball2.posX -= ball2.vSignX()*moveX;
-    ball2.posY -= ball2.vSignY()*moveY;
+    ball2.posX -= moveX;
+    ball2.posY -= moveY;
 
    /*
     // talvez isso n funcione
