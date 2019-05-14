@@ -23,7 +23,7 @@ void Player::addBall(int posX, int posY, int vX, int vY) {
 
 // -----------------------------------------------------------------------
 
-void throwBall(int mouseClickX, int mouseClickY, int mouseUpX, int mouseUpY) {
+void Player::throwBall(int mouseClickX, int mouseClickY, int mouseUpX, int mouseUpY) {
     Ball ball  (mouseClickX - BALL_RADIUS,
                 mouseClickY - BALL_RADIUS,
                 (mouseClickX - mouseUpX)/PINCH_FACTOR,
