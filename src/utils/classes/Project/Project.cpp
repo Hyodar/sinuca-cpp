@@ -17,6 +17,7 @@
 extern SDL_Window* gWindow;
 extern SDL_Renderer* gRenderer;
 extern LTexture gBallTexture;
+extern LTexture gBallAimTexture;
 extern MovementSystem gMovement;
 extern CollisionSystem gCollision;
 extern std::vector<Ball> gBalls;
