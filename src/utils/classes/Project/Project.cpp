@@ -20,6 +20,7 @@ extern SDL_Renderer* gRenderer;
 
 extern LTexture gBallTexture;
 extern LTexture gBallAimTexture;
+extern bool gAiming;
 
 extern MovementSystem gMovement;
 extern CollisionSystem gCollision;
@@ -129,6 +130,8 @@ void Project::renderAll() {
     std::cout << "[] Rendered new ball positions...\n";
 
     gAim.aim();
+
+    if(gAiming) gPlayer.drawLine();
 
     SDL_RenderPresent(gRenderer);
     std::cout << "[] Rendered present...\n";

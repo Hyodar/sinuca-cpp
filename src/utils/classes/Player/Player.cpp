@@ -1,5 +1,5 @@
 
-#include <SDL2.h>
+#include <SDL.h>
 
 #include <vector>
 #include <iostream>
@@ -16,6 +16,12 @@ extern SDL_Renderer* gRenderer;
 extern std::vector<Ball> gBalls;
 extern int gScreenSize[];
 extern int gMinPoint[];
+
+extern int gMouseClickX;
+extern int gMouseClickY;
+
+extern int gMouseMotionX;
+extern int gMouseMotionY;
 
 // -----------------------------------------------------------------------
 
@@ -63,11 +69,11 @@ void Player::addBall(int posX, int posY, int vX, int vY) {
 
 // -----------------------------------------------------------------------
 
-void Player::throwBall(int mouseClickX, int mouseClickY, int mouseUpX, int mouseUpY) {
-    Ball ball  (mouseClickX - BALL_RADIUS,
-                mouseClickY - BALL_RADIUS,
-                (mouseClickX - mouseUpX)/PINCH_FACTOR,
-                (mouseClickY - mouseUpY)/PINCH_FACTOR);
+void Player::throwBall() {
+    Ball ball  (gMouseClickX - BALL_RADIUS,
+                gMouseClickY - BALL_RADIUS,
+                (gMouseClickX - gMouseMotionY)/PINCH_FACTOR,
+                (gMouseClickY - gMouseMotionY)/PINCH_FACTOR);
     addToVector(ball);
 }
 
@@ -100,13 +106,13 @@ void Player::addToVector(Ball& ball) {
 
 // -----------------------------------------------------------------------
 
-void Player::drawLine(int mouseClickX, int mouseClickY, int mouseMotionX, int mouseMotionY) {
+void Player::drawLine() {
     SDL_SetRenderDrawColor(gRenderer,
                             DEFAULT_LINE_COLOR[0],
                             DEFAULT_LINE_COLOR[1],
                             DEFAULT_LINE_COLOR[2],
                             DEFAULT_LINE_COLOR[3]);
-    SDL_RenderDrawLine(gRenderer, mouseClickX, mouseClickY, mouseMotionX, mouseMotionY); // FIXME!
+    SDL_RenderDrawLine(gRenderer, gMouseClickX, gMouseClickY, gMouseMotionX, gMouseMotionY); // FIXME!
 }
 
 // -----------------------------------------------------------------------

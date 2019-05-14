@@ -27,9 +27,16 @@ CollisionSystem gCollision; // sistema pra processar a colisao das bolas
 
 std::vector<Ball> gBalls; // vetor das bolas presentes
 Ball gAim; // cursor do mouse
+bool gAiming = false;
 
 LTexture gBallTexture;
 LTexture gBallAimTexture;
+
+int gMouseClickX;
+int gMouseClickY;
+
+int gMouseMotionX;
+int gMouseMotionY;
 
 Player gPlayer;
 
@@ -62,21 +69,23 @@ int main(int argc, char* args[]) {
                     quit = true;
                     break;
                 case SDL_MOUSEMOTION:
-                    if(aiming) {
-                        gPlayer.drawLine(mouseClickX, mouseClickY, e.motion.x, e.motion.y);
-                    } else {
-                        gAim.posX = e.motion.x - BALL_RADIUS;
-                        gAim.posY = e.motion.y - BALL_RADIUS;
+                    gMouseMotionX = e.motion.x;
+                    gMouseMotionY = e.motion.y;
+
+                    if(!gAiming) {
+                        gAim.posX = gMouseMotionX - BALL_RADIUS;
+                        gAim.posY = gMouseMotionY - BALL_RADIUS;
                     }
+                    
                     break;
                 case SDL_MOUSEBUTTONDOWN:
-                    aiming = true;
-                    mouseClickX = e.button.x;
-                    mouseClickY = e.button.y;
+                    gAiming = true;
+                    gMouseClickX = e.button.x;
+                    gMouseClickY = e.button.y;
                     break;
                 case SDL_MOUSEBUTTONUP:
-                    aiming = false;
-                    gPlayer.throwBall(mouseClickX, mouseClickY, e.button.x, e.button.y);
+                    gAiming = false;
+                    gPlayer.throwBall();
                     break;
             }
 

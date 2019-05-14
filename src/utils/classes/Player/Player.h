@@ -17,7 +17,7 @@ class Player
 
         void randomBalls(int n);
 
-        void drawLine(int mouseClickX, int mouseClickY, int mouseMotionX, int mouseMotionY);
+        void drawLine();
     
     private:
         void addToVector(Ball& b);
