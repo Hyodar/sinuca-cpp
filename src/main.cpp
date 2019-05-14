@@ -63,12 +63,7 @@ int main(int argc, char* args[]) {
                     break;
                 case SDL_MOUSEMOTION:
                     if(aiming) {
-                        SDL_SetRenderDrawColor(gRenderer,
-                                               DEFAULT_LINE_COLOR[0],
-                                               DEFAULT_LINE_COLOR[1],
-                                               DEFAULT_LINE_COLOR[2],
-                                               DEFAULT_LINE_COLOR[3]);
-                        SDL_RenderDrawLine(gRenderer, mouseClickX, mouseClickY, e.motion.x, e.motion.y); // FIXME!
+                        gPlayer.drawLine(mouseClickX, mouseClickY, e.motion.x, e.motion.y);
                     } else {
                         gAim.posX = e.motion.x - BALL_RADIUS;
                         gAim.posY = e.motion.y - BALL_RADIUS;

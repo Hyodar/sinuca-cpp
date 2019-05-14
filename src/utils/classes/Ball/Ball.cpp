@@ -68,12 +68,12 @@ void Ball::checkCollision(Ball& ball2) {
 
 void Ball::wallCollision() {
     if(this->posX + BALL_DIAMETER >= gScreenSize[0] || this->posX <= gMinPoint[0]) {
-        std::cout << "[!] Ball is colliding horizontally with a wall...\n";
+        std::cout << "[] Ball is colliding horizontally with a wall...\n";
         this->vX = -this->vX;
         std::cout << "[] Flipped horizontal speed...\n";
     }
     if(this->posY + BALL_DIAMETER >= gScreenSize[1] || this->posY <= gMinPoint[1]) {
-        std::cout << "[!] Ball is colliding vertically with a wall...\n";
+        std::cout << "[] Ball is colliding vertically with a wall...\n";
         this->vY = -this->vY;
         std::cout << "[] Flipped vertical speed...\n";
     }
@@ -101,9 +101,11 @@ float Ball::getCenterDistance(int dx, int dy) {
 // -------------------------------------------------------------------------------
 
 void Ball::unstuck(Ball& ball2, float sinTheta, float cosTheta) {
+    // Testando
+    /*
+    // Solução 1: 
     float intersec = BALL_DIAMETER - this->getCenterDistance(this->dx, this->dy);
 
-    // rever esse /2
     int moveX = ceil(intersec*cosTheta/2);
     int moveY = ceil(intersec*sinTheta/2);
 
@@ -112,6 +114,26 @@ void Ball::unstuck(Ball& ball2, float sinTheta, float cosTheta) {
 
     ball2.posX -= moveX;
     ball2.posY -= moveY;
+    */
+
+    // talvez isso n funcione
+    float posX1 = this->posX*cosTheta + this->posY*sinTheta;
+    float posX2 = ball2.posX*cosTheta + ball2.posY*sinTheta;
+
+    float posY1 = -this->posX*sinTheta + this->posY*cosTheta;
+    float posY2 = -ball2.posX*sinTheta + ball2.posY*cosTheta;
+
+    float intersec = BALL_DIAMETER - (posX2 - posX1);
+
+    posX1 += ceil(intersec/2);
+    posX2 -= ceil(intersec/2);
+
+    this->posX = posX1*cosTheta - posY1*sinTheta;
+    this->posY = posX1*sinTheta + posY1*cosTheta;
+
+    ball2.posX = posX2*cosTheta - posY2*sinTheta;
+    ball2.posY = posX2*sinTheta + posY2*cosTheta;
+
 }
 
 // -------------------------------------------------------------------------------

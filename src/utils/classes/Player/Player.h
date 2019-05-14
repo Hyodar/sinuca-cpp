@@ -7,6 +7,8 @@
 class Player
 {
     public:
+        void setGameConfig();
+        
         void addBall();
 
         void addBall(int posX, int posY, int vX, int vY);
@@ -15,7 +17,7 @@ class Player
 
         void randomBalls(int n);
 
-        void setGameConfig();
+        void drawLine(int mouseClickX, int mouseClickY, int mouseMotionX, int mouseMotionY);
     
     private:
         void addToVector(Ball& b);

@@ -47,7 +47,7 @@ void Project::init() {
                     SDL_WINDOW_SHOWN);
 
     if(!gWindow) {
-        std::cout << "Erro: Window não foi inicializada corretamente: " << SDL_GetError();
+        std::cout << "[!] Error while creating window: " << SDL_GetError();
         throw -1;
     } else {
         std::cout << "[] Window initialized...\n";
@@ -60,13 +60,13 @@ void Project::init() {
                     SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
     if(!gRenderer) {
-        std::cout << "Erro: Renderer não foi inicializada corretamente: " << SDL_GetError();
+        std::cout << "[!] Error while creating renderer: " << SDL_GetError();
         throw -1;
     } else {
         std::cout << "[] Renderer initialized...\n";
     }
 
-    // Cor da
+    // Cor da background
     SDL_SetRenderDrawColor(gRenderer,
                             DEFAULT_BG_COLOR[0],
                             DEFAULT_BG_COLOR[1],
@@ -80,12 +80,12 @@ void Project::init() {
 
     bool openedBallTexture = gBallTexture.loadFromFile("resources/images/ball.png");
     
-    if(!openedBallTexture) std::cout << "Could not open ball texture!\n";
+    if(!openedBallTexture) std::cout << "[!] Could not open ball texture!\n";
     else std::cout << "[] Ball texture opened...\n";
 
     bool openedAimTexture = gBallAimTexture.loadFromFile("resources/images/ball_aim.png");
     
-    if(!openedAimTexture) std::cout << "Could not open ball aim texture!\n";
+    if(!openedAimTexture) std::cout << "[!] Could not open ball aim texture!\n";
     else std::cout << "[] Ball aim texture opened...\n";
 
 }
