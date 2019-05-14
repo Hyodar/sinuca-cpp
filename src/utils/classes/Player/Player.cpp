@@ -98,7 +98,12 @@ void Player::addToVector(Ball& ball) {
 // -----------------------------------------------------------------------
 
 void Player::drawLine(int mouseClickX, int mouseClickY, int mouseMotionX, int mouseMotionY) {
-    
+    SDL_SetRenderDrawColor(gRenderer,
+                            DEFAULT_LINE_COLOR[0],
+                            DEFAULT_LINE_COLOR[1],
+                            DEFAULT_LINE_COLOR[2],
+                            DEFAULT_LINE_COLOR[3]);
+    SDL_RenderDrawLine(gRenderer, mouseClickX, mouseClickY, e.motion.x, e.motion.y); // FIXME!
 }
 
 // -----------------------------------------------------------------------

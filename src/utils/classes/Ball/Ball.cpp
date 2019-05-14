@@ -81,14 +81,14 @@ void Ball::wallCollision() {
 
 // -------------------------------------------------------------------------------
 
-void Ball::vSignX() {
+int Ball::vSignX() {
     if(this->vX >= 0) return 1;
     return -1;
 }
 
 // -------------------------------------------------------------------------------
 
-void Ball::vSignY() {
+int Ball::vSignY() {
     if(this->vY >= 0) return 1;
     return -1;
 }
