@@ -42,7 +42,6 @@ int main(int argc, char* args[]) {
 
     Project project;
 
-    gPlayer.setGameConfig();
     project.init();
 
     bool quit = false;
