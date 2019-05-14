@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
+#include <iostream>
 #include <string>
 
 #include "./ImgTexture.h"
@@ -25,7 +26,7 @@ ImgTexture::~ImgTexture() {
 
 // --------------------------------------------------------------------
 
-ImgTexture::free() {
+void ImgTexture::free() {
     if(this->sdImgTexture != nullptr) {
         
         SDL_DestroyTexture(this->sdImgTexture);
@@ -87,7 +88,7 @@ void ImgTexture::setBlendMode(SDL_BlendMode blending) {
 // ---------------------------------------------------------------------
 
 void ImgTexture::render(int posX, int posY, SDL_Rect* clip, double angle,
-                         SDL_point* center, SDL_RendererFlip flip) 
+                         SDL_Point* center, SDL_RendererFlip flip) 
 {
     SDL_Rect renderQuad = {posX, posY, this->width, this->height};
 
