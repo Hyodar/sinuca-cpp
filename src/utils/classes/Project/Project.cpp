@@ -103,5 +103,5 @@ void Project::renderAll() {
     std::cout << "[] Rendered present...\n";
 
     SDL_Delay(10);
-    std::cout << "[] SDL Delay...";
+    std::cout << "[] SDL Delay...\n";
 }
