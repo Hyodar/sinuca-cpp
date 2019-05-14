@@ -74,6 +74,7 @@ int main(int argc, char* args[]) {
                 case SDL_MOUSEMOTION:
 
                     if(aiming) {
+                        SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
                         SDL_RenderDrawLine(gRenderer, mouseClickX, mouseClickY, e.motion.x, e.motion.y);
                     } else {
                         gAim.posX = e.motion.x - BALL_RADIUS;
@@ -87,6 +88,7 @@ int main(int argc, char* args[]) {
                     mouseClickY = e.button.y;
                     break;
                 case SDL_MOUSEBUTTONUP:
+                    aiming = false;
                     player.throwBall(mouseClickX, mouseClickY, e.button.x, e.button.y);
                     break;
             }
