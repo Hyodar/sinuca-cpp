@@ -12,7 +12,7 @@ using namespace std;
 #include "./utils/classes/Ball/Ball.h"
 #include "./utils/classes/Player/Player.h"
 #include "./utils/classes/Project/Project.h"
-#include "./utils/classes/LTexture/LTexture.h"
+#include "./utils/classes/ImgTexture/ImgTexture.h"
 #include "./utils/classes/MovementSystem/MovementSystem.h"
 #include "./utils/classes/CollisionSystem/CollisionSystem.h"
 
@@ -29,8 +29,8 @@ std::vector<Ball> gBalls; // vetor das bolas presentes
 Ball gAim; // cursor do mouse
 bool gAiming = false;
 
-LTexture gBallTexture;
-LTexture gBallAimTexture;
+ImgTexture gBalImgTexture;
+ImgTexture gBallAimTexture;
 
 int gMouseClickX;
 int gMouseClickY;

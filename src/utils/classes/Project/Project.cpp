@@ -9,7 +9,7 @@
 
 #include "../Ball/Ball.h"
 #include "../Player/Player.h"
-#include "../LTexture/LTexture.h"
+#include "../ImgTexture/ImgTexture.h"
 #include "../MovementSystem/MovementSystem.h"
 #include "../CollisionSystem/CollisionSystem.h"
 
@@ -18,8 +18,8 @@
 extern SDL_Window* gWindow;
 extern SDL_Renderer* gRenderer;
 
-extern LTexture gBallTexture;
-extern LTexture gBallAimTexture;
+extern ImgTexture gBalImgTexture;
+extern ImgTexture gBallAimTexture;
 extern bool gAiming;
 
 extern MovementSystem gMovement;
@@ -79,12 +79,12 @@ void Project::init() {
 
     std::cout << "[] Image module initialized...\n";
 
-    bool openedBallTexture = gBallTexture.loadFromFile("resources/images/ball.png");
+    bool openedBalImgTexture = gBalImgTexture.loadImg("resources/images/ball.png");
     
-    if(!openedBallTexture) std::cout << "[!] Could not open ball texture!\n";
+    if(!openedBalImgTexture) std::cout << "[!] Could not open ball texture!\n";
     else std::cout << "[] Ball texture opened...\n";
 
-    bool openedAimTexture = gBallAimTexture.loadFromFile("resources/images/ball_aim.png");
+    bool openedAimTexture = gBallAimTexture.loadImg("resources/images/ball_aim.png");
     
     if(!openedAimTexture) std::cout << "[!] Could not open ball aim texture!\n";
     else std::cout << "[] Ball aim texture opened...\n";
@@ -94,7 +94,7 @@ void Project::init() {
 // -------------------------------------------------------------------------
 
 void Project::close() {
-    gBallTexture.free();
+    gBalImgTexture.free();
 
     SDL_DestroyRenderer(gRenderer);
     SDL_DestroyWindow(gWindow);
@@ -109,17 +109,11 @@ void Project::close() {
 // -------------------------------------------------------------------------
 
 void Project::renderAll() {
-    
-    if(gAiming) {
-        gPlayer.drawLine();
-    }
-    else {
-        gMovement.process();
-        std::cout << "[] Movement events processed...\n";
+    gMovement.process();
+    std::cout << "[] Movement events processed...\n";
 
-        gCollision.process();
-        std::cout << "[] Collision events processed...\n";
-    }
+    gCollision.process();
+    std::cout << "[] Collision events processed...\n";
 
     SDL_SetRenderDrawColor(gRenderer,
                             DEFAULT_BG_COLOR[0],
@@ -137,9 +131,13 @@ void Project::renderAll() {
 
     gAim.aim();
 
+    if(gAiming) gPlayer.drawLine();
+
     SDL_RenderPresent(gRenderer);
     std::cout << "[] Rendered present...\n";
 
     SDL_Delay(10);
     std::cout << "[] SDL Delay...\n";
 }
+
+// -------------------------------------------------------------------------

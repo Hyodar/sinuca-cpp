@@ -8,14 +8,14 @@
 
 #include "../../../include/constants.h"
 
-#include "../LTexture/LTexture.h"
+#include "../ImgTexture/ImgTexture.h"
 
 #include "Ball.h"
 
 extern int gMinPoint[];
 extern int gScreenSize[];
-extern LTexture gBallTexture;
-extern LTexture gBallAimTexture;
+extern ImgTexture gBalImgTexture;
+extern ImgTexture gBallAimTexture;
 
 // -----------------------------------------------------------------------------
 
@@ -40,7 +40,7 @@ Ball::Ball(int posX, int posY, int vX, int vY) {
 // -----------------------------------------------------------------------------
 
 void Ball::render() {
-    gBallTexture.render(this->posX, this->posY);
+    gBalImgTexture.render(this->posX, this->posY);
 }
 
 // -----------------------------------------------------------------------------

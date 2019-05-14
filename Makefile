@@ -12,8 +12,8 @@ BIN = sinuca
 CPP_BIN = $(SRC_DIR)/main.cpp
 
 # Código-fonte (emendar outros wildcards caso tenha mais diretórios)
-CPP = $(wildcard $(SRC_DIR)/utils/classes/Ball/*.cpp) $(wildcard $(SRC_DIR)/utils/classes/CollisionSystem/*.cpp) $(wildcard $(SRC_DIR)/utils/classes/MovementSystem/*.cpp) $(wildcard $(SRC_DIR)/utils/classes/Player/*.cpp) $(wildcard $(SRC_DIR)/utils/classes/Project/*.cpp) $(wildcard $(SRC_DIR)/utils/classes/LTexture/*.cpp)
-HEADERS = $(wildcard $(SRC_DIR)/*.h) $(wildcard $(SRC_DIR)/utils/classes/Ball/*.h) $(wildcard $(SRC_DIR)/utils/classes/CollisionSystem/*.h) $(wildcard $(SRC_DIR)/utils/classes/MovementSystem/*.h) $(wildcard $(SRC_DIR)/utils/classes/Player/*.h) $(wildcard $(SRC_DIR)/utils/classes/Project/*.h) $(wildcard $(SRC_DIR)/utils/classes/LTexture/*.h)
+CPP = $(wildcard $(SRC_DIR)/utils/classes/Ball/*.cpp) $(wildcard $(SRC_DIR)/utils/classes/CollisionSystem/*.cpp) $(wildcard $(SRC_DIR)/utils/classes/MovementSystem/*.cpp) $(wildcard $(SRC_DIR)/utils/classes/Player/*.cpp) $(wildcard $(SRC_DIR)/utils/classes/Project/*.cpp) $(wildcard $(SRC_DIR)/utils/classes/ImgTexture/*.cpp)
+HEADERS = $(wildcard $(SRC_DIR)/*.h) $(wildcard $(SRC_DIR)/utils/classes/Ball/*.h) $(wildcard $(SRC_DIR)/utils/classes/CollisionSystem/*.h) $(wildcard $(SRC_DIR)/utils/classes/MovementSystem/*.h) $(wildcard $(SRC_DIR)/utils/classes/Player/*.h) $(wildcard $(SRC_DIR)/utils/classes/Project/*.h) $(wildcard $(SRC_DIR)/utils/classes/ImgTexture/*.h)
 
 # Objetos
 OBJ = $(subst $(SRC_DIR),$(BUILD_DIR),$(CPP:%.cpp=%.cpp.o))
