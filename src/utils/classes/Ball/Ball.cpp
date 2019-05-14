@@ -42,6 +42,12 @@ void Ball::render() {
     gBallTexture.render(this->posX, this->posY);
 }
 
+// -----------------------------------------------------------------------------
+
+void Ball::aim() {
+    gBallAimTexture.render(this->posX, this->posY);
+}
+
 // ------------------------------------------------------------------------------
 
 void Ball::checkCollision(Ball& ball2) {

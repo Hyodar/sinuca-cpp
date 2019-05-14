@@ -1,3 +1,6 @@
+#ifndef LTEX_H_
+#define LTEX_H_
+
 #include <SDL.h>
 #include <SDL_image.h>
 
@@ -47,3 +50,5 @@ class LTexture
 		int mWidth;
 		int mHeight;
 };
+
+#endif

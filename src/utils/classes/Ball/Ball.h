@@ -23,6 +23,8 @@ class Ball
 
         void render();
 
+        void aim();
+
         void checkCollision(Ball& ball2);
 
         void wallCollision();

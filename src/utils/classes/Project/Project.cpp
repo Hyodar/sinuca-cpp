@@ -53,16 +53,25 @@ void Project::init() {
         std::cout << "[] Renderer initialized...\n";
     }
 
-    SDL_SetRenderDrawColor(gRenderer, 0x0, 0xFF, 0x0, 0xFF);
+    SDL_SetRenderDrawColor(gRenderer,
+                            DEFAULT_BG_COLOR[0],
+                            DEFAULT_BG_COLOR[1],
+                            DEFAULT_BG_COLOR[2],
+                            DEFAULT_BG_COLOR[4]);
 
     IMG_Init(IMG_INIT_PNG);
 
     std::cout << "[] Image module initialized...\n";
 
-    bool openedTexture = gBallTexture.loadFromFile("resources/images/ball.png");
+    bool openedBallTexture = gBallTexture.loadFromFile("resources/images/ball.png");
     
-    if(!openedTexture) std::cout << "Could not open ball texture!\n";
+    if(!openedBallTexture) std::cout << "Could not open ball texture!\n";
     else std::cout << "[] Ball texture opened...\n";
+
+    bool openedAimTexture = gBallAimTexture.loadFromFile("resources/images/ball_aim.png");
+    
+    if(!openedAimTexture) std::cout << "Could not open ball aim texture!\n";
+    else std::cout << "[] Ball aim texture opened...\n";
 }
 
 // -------------------------------------------------------------------------
@@ -97,7 +106,7 @@ void Project::renderAll() {
     }
     std::cout << "[] Rendered new ball positions...\n";
 
-    //gAim.render();
+    gAim.aim();
 
     SDL_RenderPresent(gRenderer);
     std::cout << "[] Rendered present...\n";

@@ -29,6 +29,7 @@ std::vector<Ball> gBalls; // vetor das bolas presentes
 Ball gAim; // cursor do mouse
 
 LTexture gBallTexture;
+LTexture gBallAimTexture;
 
 int gMinPoint[] = {DEFAULT_MIN_X, DEFAULT_MIN_Y};
 int gScreenSize[2] = {DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT};
@@ -67,7 +68,13 @@ int main(int argc, char* args[]) {
                 case SDL_QUIT:
                     quit = true;
                     break;
-
+                case SDL_MOUSEMOTION:
+                    gAim.posX = e.motion.x - BALL_RADIUS;
+                    gAim.posY = e.motion.y - BALL_RADIUS;
+                    break;
+                case SDL_MOUSEBUTTONDOWN:
+                    // ################### trocar essas velocidades pra depender de um pinch
+                    player.addBall(e.button.x, e.button.y, 1, 1);
             }
 
         }
