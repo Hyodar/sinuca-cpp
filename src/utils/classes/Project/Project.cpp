@@ -99,6 +99,12 @@ void Project::renderAll() {
     gCollision.process();
     std::cout << "[] Collision events processed...\n";
 
+    SDL_SetRenderDrawColor(gRenderer,
+                            DEFAULT_BG_COLOR[0],
+                            DEFAULT_BG_COLOR[1],
+                            DEFAULT_BG_COLOR[2],
+                            DEFAULT_BG_COLOR[4]);
+
     SDL_RenderClear(gRenderer);
     std::cout << "[] Rendered clear...\n";
 

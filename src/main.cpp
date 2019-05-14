@@ -74,7 +74,7 @@ int main(int argc, char* args[]) {
                 case SDL_MOUSEMOTION:
 
                     if(aiming) {
-                        SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+                        SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
                         SDL_RenderDrawLine(gRenderer, mouseClickX, mouseClickY, e.motion.x, e.motion.y);
                     } else {
                         gAim.posX = e.motion.x - BALL_RADIUS;
