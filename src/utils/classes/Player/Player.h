@@ -10,6 +10,8 @@ class Player
         void addBall();
 
         void addBall(int posX, int posY, int vX, int vY);
+
+        void throwBall(int mouseClickX, int mouseClickY, int mouseUpX, int mouseUpY);
     
     private:
         void addToVector(Ball& b);

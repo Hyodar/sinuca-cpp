@@ -21,7 +21,7 @@ void CollisionSystem::process() {
 void CollisionSystem::checkAllCollisions() {
     for(unsigned int i=0; i<gBalls.size(); i++) {
         for(unsigned int j=i+1; j<gBalls.size(); j++) {
-            std::cout << "[] Checking collision between balls " << i << "and " << j << "...\n";
+            std::cout << "[] Checking collision between balls " << i << " and " << j << "...\n";
             gBalls[i].checkCollision(gBalls[j]);
         }
 
