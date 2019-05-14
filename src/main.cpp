@@ -76,7 +76,6 @@ int main(int argc, char* args[]) {
                         gAim.posX = gMouseMotionX - BALL_RADIUS;
                         gAim.posY = gMouseMotionY - BALL_RADIUS;
                     }
-
                     break;
                 case SDL_MOUSEBUTTONDOWN:
                     gAiming = true;

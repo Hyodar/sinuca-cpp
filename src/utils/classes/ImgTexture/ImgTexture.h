@@ -33,7 +33,7 @@ class ImgTexture
 
         void render(int posX, int posY,
                     SDL_Rect* clip = nullptr, double angle = 0.0,
-                    SDL_Point* center, SDL_RendererFlip flip = SDL_FLIP_NONE);
+                    SDL_Point* center = nullptr, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
 };
 
