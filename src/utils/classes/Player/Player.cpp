@@ -72,7 +72,7 @@ void Player::addBall(int posX, int posY, int vX, int vY) {
 void Player::throwBall() {
     Ball ball  (gMouseClickX - BALL_RADIUS,
                 gMouseClickY - BALL_RADIUS,
-                (gMouseClickX - gMouseMotionY)/PINCH_FACTOR,
+                (gMouseClickX - gMouseMotionX)/PINCH_FACTOR,
                 (gMouseClickY - gMouseMotionY)/PINCH_FACTOR);
     addToVector(ball);
 }

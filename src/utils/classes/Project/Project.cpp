@@ -109,11 +109,17 @@ void Project::close() {
 // -------------------------------------------------------------------------
 
 void Project::renderAll() {
-    gMovement.process();
-    std::cout << "[] Movement events processed...\n";
+    
+    if(gAiming) {
+        gPlayer.drawLine();
+    }
+    else {
+        gMovement.process();
+        std::cout << "[] Movement events processed...\n";
 
-    gCollision.process();
-    std::cout << "[] Collision events processed...\n";
+        gCollision.process();
+        std::cout << "[] Collision events processed...\n";
+    }
 
     SDL_SetRenderDrawColor(gRenderer,
                             DEFAULT_BG_COLOR[0],
@@ -130,8 +136,6 @@ void Project::renderAll() {
     std::cout << "[] Rendered new ball positions...\n";
 
     gAim.aim();
-
-    if(gAiming) gPlayer.drawLine();
 
     SDL_RenderPresent(gRenderer);
     std::cout << "[] Rendered present...\n";
