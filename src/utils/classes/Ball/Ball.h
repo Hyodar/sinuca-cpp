@@ -8,8 +8,8 @@ class Ball
 
         int posX = 0;
         int posY = 0;
-        int vX = 0;
-        int vY = 0;
+        float vX = 0;
+        float vY = 0;
         
         // distancia entre outra, para colisoes
         int dx = 0;

@@ -19,8 +19,6 @@ using namespace std;
 // Variaveis globais (g para indicar global)
 // --------------------------------------------------------------------
 
-// TODO: colocar forma de escolher dimensoes da janela e numero inicial de bolas
-
 SDL_Window *gWindow = nullptr; // janela do jogo
 SDL_Renderer *gRenderer = nullptr; // renderer
 
@@ -72,15 +70,13 @@ int main(int argc, char* args[]) {
                     quit = true;
                     break;
                 case SDL_MOUSEMOTION:
-
                     if(aiming) {
                         SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-                        SDL_RenderDrawLine(gRenderer, mouseClickX, mouseClickY, e.motion.x, e.motion.y);
+                        SDL_RenderDrawLine(gRenderer, mouseClickX, mouseClickY, e.motion.x, e.motion.y); // FIXME!
                     } else {
                         gAim.posX = e.motion.x - BALL_RADIUS;
                         gAim.posY = e.motion.y - BALL_RADIUS;
                     }
-
                     break;
                 case SDL_MOUSEBUTTONDOWN:
                     aiming = true;
