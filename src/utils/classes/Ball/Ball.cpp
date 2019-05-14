@@ -15,6 +15,7 @@
 extern int gMinPoint[];
 extern int gScreenSize[];
 extern LTexture gBallTexture;
+extern LTexture gBallAimTexture;
 
 // -----------------------------------------------------------------------------
 
