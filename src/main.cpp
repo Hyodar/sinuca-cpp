@@ -31,6 +31,8 @@ Ball gAim; // cursor do mouse
 LTexture gBallTexture;
 LTexture gBallAimTexture;
 
+Player gPlayer;
+
 int gMinPoint[] = {DEFAULT_MIN_X, DEFAULT_MIN_Y};
 int gScreenSize[2] = {DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT};
 
@@ -39,24 +41,15 @@ int gScreenSize[2] = {DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT};
 int main(int argc, char* args[]) {
 
     Project project;
-    Player player;
 
+    gPlayer.setGameConfig();
     project.init();
 
     bool quit = false;
     SDL_Event e;
 
-    player.addBall(0,0,2,3);
-    std::cout << "[] Player added a ball...\n";
-
-    player.addBall(200,400,-1,5);
-    std::cout << "[] Player added a ball...\n";
-
     int mouseClickX = 0;
     int mouseClickY = 0;
-
-    int mousePosX = 0;
-    int mousePosY = 0;
 
     bool aiming = false;
 
@@ -71,7 +64,11 @@ int main(int argc, char* args[]) {
                     break;
                 case SDL_MOUSEMOTION:
                     if(aiming) {
-                        SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+                        SDL_SetRenderDrawColor(gRenderer,
+                                               DEFAULT_LINE_COLOR[0],
+                                               DEFAULT_LINE_COLOR[1],
+                                               DEFAULT_LINE_COLOR[2],
+                                               DEFAULT_LINE_COLOR[3]);
                         SDL_RenderDrawLine(gRenderer, mouseClickX, mouseClickY, e.motion.x, e.motion.y); // FIXME!
                     } else {
                         gAim.posX = e.motion.x - BALL_RADIUS;
@@ -85,7 +82,7 @@ int main(int argc, char* args[]) {
                     break;
                 case SDL_MOUSEBUTTONUP:
                     aiming = false;
-                    player.throwBall(mouseClickX, mouseClickY, e.button.x, e.button.y);
+                    gPlayer.throwBall(mouseClickX, mouseClickY, e.button.x, e.button.y);
                     break;
             }
 

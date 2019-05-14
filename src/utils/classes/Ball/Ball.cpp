@@ -104,8 +104,8 @@ void Ball::unstuck(Ball& ball2, float sinTheta, float cosTheta) {
     float intersec = BALL_DIAMETER - this->getCenterDistance(this->dx, this->dy);
 
     // rever esse /2
-    int moveX = round(intersec*cosTheta/2);
-    int moveY = round(intersec*sinTheta/2);
+    int moveX = ceil(intersec*cosTheta/2);
+    int moveY = ceil(intersec*sinTheta/2);
 
     this->posX += moveX;
     this->posY += moveY;

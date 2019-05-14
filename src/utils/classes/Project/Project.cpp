@@ -8,6 +8,7 @@
 #include "../../../include/constants.h"
 
 #include "../Ball/Ball.h"
+#include "../Player/Player.h"
 #include "../LTexture/LTexture.h"
 #include "../MovementSystem/MovementSystem.h"
 #include "../CollisionSystem/CollisionSystem.h"
@@ -16,17 +17,27 @@
 
 extern SDL_Window* gWindow;
 extern SDL_Renderer* gRenderer;
+
 extern LTexture gBallTexture;
 extern LTexture gBallAimTexture;
+
 extern MovementSystem gMovement;
 extern CollisionSystem gCollision;
+
+extern Player gPlayer;
+
 extern std::vector<Ball> gBalls;
 extern Ball gAim;
+
 extern int gScreenSize[];
 
 // -------------------------------------------------------------------------
 
 void Project::init() {
+    // Jogador seta as configurações do jogo
+    gPlayer.setGameConfig();
+
+    // Cria janela
     gWindow = SDL_CreateWindow(
                     DEFAULT_WINDOW_NAME,
                     SDL_WINDOWPOS_UNDEFINED,
@@ -42,6 +53,7 @@ void Project::init() {
         std::cout << "[] Window initialized...\n";
     }
 
+    // Cria renderer
     gRenderer = SDL_CreateRenderer(
                     gWindow,
                     -1,
@@ -54,12 +66,14 @@ void Project::init() {
         std::cout << "[] Renderer initialized...\n";
     }
 
+    // Cor da
     SDL_SetRenderDrawColor(gRenderer,
                             DEFAULT_BG_COLOR[0],
                             DEFAULT_BG_COLOR[1],
                             DEFAULT_BG_COLOR[2],
                             DEFAULT_BG_COLOR[4]);
-
+                        
+    // Iniciando o módulo de imagens
     IMG_Init(IMG_INIT_PNG);
 
     std::cout << "[] Image module initialized...\n";
@@ -73,6 +87,7 @@ void Project::init() {
     
     if(!openedAimTexture) std::cout << "Could not open ball aim texture!\n";
     else std::cout << "[] Ball aim texture opened...\n";
+
 }
 
 // -------------------------------------------------------------------------
