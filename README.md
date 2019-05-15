@@ -5,6 +5,7 @@ Para usuários de Linux, onde foi testado, são necessárias as seguintes biblio
  * libsdl2-dev
  * libsdl2-image-dev
  * libsdl2-ttf-dev
+
 Além do compilador g++.
 
 Para compilar, utilize `make` no mesmo diretório do Makefile.

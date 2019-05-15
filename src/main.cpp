@@ -29,17 +29,21 @@ std::vector<Ball> gBalls; // vetor das bolas presentes
 Ball gAim; // cursor do mouse
 bool gAiming = false;
 
-ImgTexture gBalImgTexture;
-ImgTexture gBallAimTexture;
+ImgTexture gBalImgTexture; // textura da img da bola
+ImgTexture gBallAimTexture; // textura da img da mira
 
+// mantem o ultimo clique e a posicao do mouse pra usos variados
 int gMouseClickX;
 int gMouseClickY;
 
 int gMouseMotionX;
 int gMouseMotionY;
 
+// entidade Player, implementa o que é usado pelo jogador
 Player gPlayer;
 
+// ponto minimo e maximo da tela
+// o ponto mínimo é útil pra não ter que mudar todo o código se tiver alguma parte de ui em cima
 int gMinPoint[] = {DEFAULT_MIN_X, DEFAULT_MIN_Y};
 int gScreenSize[2] = {DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT};
 
@@ -47,8 +51,10 @@ int gScreenSize[2] = {DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT};
 
 int main(int argc, char* args[]) {
 
+    // entidade Project, implementa as funcoes de inicializaçao e processamento interno da simulacao
     Project project;
 
+    // inicializa janela, renderer, etc
     project.init();
 
     bool quit = false;
@@ -62,6 +68,7 @@ int main(int argc, char* args[]) {
             {
                 case SDL_QUIT:
                     quit = true;
+
                     break;
 
                 case SDL_MOUSEMOTION:
@@ -69,6 +76,7 @@ int main(int argc, char* args[]) {
                     gMouseMotionY = e.motion.y;
 
                     if(!gAiming) {
+                        // so move a mira se n estiver mirando uma bola para jogar
                         gAim.posX = gMouseMotionX - BALL_RADIUS;
                         gAim.posY = gMouseMotionY - BALL_RADIUS;
                     }
@@ -77,26 +85,33 @@ int main(int argc, char* args[]) {
                 
                 case SDL_MOUSEBUTTONDOWN:
                     gAiming = true;
+
                     gMouseClickX = e.button.x;
                     gMouseClickY = e.button.y;
+
                     break;
 
                 case SDL_MOUSEBUTTONUP:
                     gAiming = false;
+
                     gPlayer.throwBall();
+
                     break;
-                    
+
             }
 
         }
 
         std::cout << "[] Processing window changes...\n";
 
+        // processa tudo: o sistema de movimentacao, colisao, renderizacao, etc
         project.renderAll();
     }
 
+    // destroi as instancias criadas pelo projeto e chama a funcao de fechamento do SDL
     project.close();
 
+    return 0;
 }
 
 
