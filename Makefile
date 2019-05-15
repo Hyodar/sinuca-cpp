@@ -1,7 +1,7 @@
 # Opções do compilador
 CC = g++
 CFLAGS = -I/usr/include -Iresources/include -Isrc/thirdparty -O2 -Wall -std=c++11 -DDEBUG
-LDFLAGS = -L/usr/lib -lSDL2 -lSDL2_image
+LDFLAGS = -L/usr/lib -lSDL2 -lSDL2_image -lSDL2_ttf
 
 # Diretórios
 SRC_DIR = ./src
