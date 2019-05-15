@@ -28,31 +28,34 @@ extern int gMouseMotionY;
 void Player::setGameConfig() {
     int nBalls;
 
-    std::cout << "Largura da tela (em px): ";
+    std::cout << "Largura da tela (em px): \n";
     std::cin >> gScreenSize[0];
     
     if(std::cin.fail()) {
-        std::cout << "[] Invalid input - using default value...";
+        std::cout << "[] Invalid input - using default value...\n";
         gScreenSize[0] = DEFAULT_SCREEN_WIDTH;
         std::cin.clear(); // reseta a flag fail do cin
+        std::cin.ignore();
     }
 
-    std::cout << "Altura da tela (em px): ";
+    std::cout << "Altura da tela (em px): \n";
     std::cin >> gScreenSize[1];
 
     if(std::cin.fail()) {
-        std::cout << "[] Invalid input - using default value...";
+        std::cout << "[] Invalid input - using default value...\n";
         gScreenSize[1] = DEFAULT_SCREEN_HEIGHT;
         std::cin.clear(); // reseta a flag fail do cin
+        std::cin.ignore();
     }
 
-    std::cout << "Numero inicial de bolas: ";
+    std::cout << "Numero inicial de bolas: \n";
     std::cin >> nBalls;
 
     if(std::cin.fail()) {
-        std::cout << "[] Invalid input - using default value...";
+        std::cout << "[] Invalid input - using default value...\n";
         nBalls = DEFAULT_BALL_COUNT;
         std::cin.clear(); // reseta a flag fail do cin
+        std::cin.ignore();
     }
 
     std::cout << "\n";

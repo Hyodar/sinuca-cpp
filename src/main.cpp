@@ -54,11 +54,6 @@ int main(int argc, char* args[]) {
     bool quit = false;
     SDL_Event e;
 
-    int mouseClickX = 0;
-    int mouseClickY = 0;
-
-    bool aiming = false;
-
     while(!quit) {
 
         while(SDL_PollEvent(&e) != 0) {
@@ -68,6 +63,7 @@ int main(int argc, char* args[]) {
                 case SDL_QUIT:
                     quit = true;
                     break;
+
                 case SDL_MOUSEMOTION:
                     gMouseMotionX = e.motion.x;
                     gMouseMotionY = e.motion.y;
@@ -76,16 +72,20 @@ int main(int argc, char* args[]) {
                         gAim.posX = gMouseMotionX - BALL_RADIUS;
                         gAim.posY = gMouseMotionY - BALL_RADIUS;
                     }
+
                     break;
+                
                 case SDL_MOUSEBUTTONDOWN:
                     gAiming = true;
                     gMouseClickX = e.button.x;
                     gMouseClickY = e.button.y;
                     break;
+
                 case SDL_MOUSEBUTTONUP:
                     gAiming = false;
                     gPlayer.throwBall();
                     break;
+                    
             }
 
         }
