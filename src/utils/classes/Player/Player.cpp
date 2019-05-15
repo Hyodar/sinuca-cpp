@@ -31,7 +31,7 @@ void Player::setGameConfig() {
     std::cout << "Largura da tela (em px): \n";
     std::cin >> gScreenSize[0];
     
-    if(std::cin.fail()) {
+    if(std::cin.fail() || gScreenSize[0] < UI_WIDTH) {
         std::cout << "[] Invalid input - using default value...\n";
         gScreenSize[0] = DEFAULT_SCREEN_WIDTH;
         std::cin.clear(); // reseta a flag fail do cin
@@ -41,7 +41,7 @@ void Player::setGameConfig() {
     std::cout << "Altura da tela (em px): \n";
     std::cin >> gScreenSize[1];
 
-    if(std::cin.fail()) {
+    if(std::cin.fail() || gScreenSize[1] < UI_HEIGHT) {
         std::cout << "[] Invalid input - using default value...\n";
         gScreenSize[1] = DEFAULT_SCREEN_HEIGHT;
         std::cin.clear(); // reseta a flag fail do cin
@@ -88,8 +88,8 @@ void Player::randomBalls(int nBalls) {
     for(int i=0; i<nBalls; i++) {
         Ball ball  ((rand() % (gScreenSize[0] - gMinPoint[0])) + gMinPoint[0],
                     (rand() % (gScreenSize[1] - gMinPoint[1])) + gMinPoint[1],
-                    (rand() % 2*DEFAULT_RAND_VEL_RNG) - DEFAULT_RAND_VEL_RNG,
-                    (rand() % 2*DEFAULT_RAND_VEL_RNG) - DEFAULT_RAND_VEL_RNG);
+                    (rand() % 4*DEFAULT_RAND_VEL_RNG) - 2*DEFAULT_RAND_VEL_RNG,
+                    (rand() % 4*DEFAULT_RAND_VEL_RNG) - 2*DEFAULT_RAND_VEL_RNG);
         addToVector(ball);
     }
 }

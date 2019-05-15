@@ -16,6 +16,7 @@ using namespace std;
 #include "./utils/classes/ImgTexture/ImgTexture.h"
 #include "./utils/classes/MovementSystem/MovementSystem.h"
 #include "./utils/classes/CollisionSystem/CollisionSystem.h"
+#include "./utils/classes/UserInterface/UserInterface.h"
 
 // Variaveis globais (g para indicar global)
 // --------------------------------------------------------------------
@@ -25,6 +26,7 @@ SDL_Renderer *gRenderer = nullptr; // renderer
 
 MovementSystem gMovement; // sistema pra processar o movimento das bolas
 CollisionSystem gCollision; // sistema pra processar a colisao das bolas
+UserInterface gUserInterface;
 
 std::vector<Ball> gBalls; // vetor das bolas presentes
 Ball gAim; // cursor do mouse
@@ -47,6 +49,8 @@ Player gPlayer;
 // o ponto mínimo é útil pra não ter que mudar todo o código se tiver alguma parte de ui em cima
 int gMinPoint[] = {DEFAULT_MIN_X, DEFAULT_MIN_Y};
 int gScreenSize[2] = {DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT};
+
+bool gIsPlaying = true;
 
 // ---------------------------------------------------------------------
 
@@ -95,7 +99,9 @@ int main(int argc, char* args[]) {
                 case SDL_MOUSEBUTTONUP:
                     gAiming = false;
 
-                    gPlayer.throwBall();
+                    if(!gUserInterface.checkClicks()) {
+                        gPlayer.throwBall();
+                    }
 
                     break;
 

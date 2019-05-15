@@ -1,6 +1,7 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 
 #include <iostream>
 #include <vector>
@@ -12,6 +13,7 @@
 #include "../ImgTexture/ImgTexture.h"
 #include "../MovementSystem/MovementSystem.h"
 #include "../CollisionSystem/CollisionSystem.h"
+#include "../UserInterface/UserInterface.h"
 
 #include "Project.h"
 
@@ -24,6 +26,7 @@ extern bool gAiming;
 
 extern MovementSystem gMovement;
 extern CollisionSystem gCollision;
+extern UserInterface gUserInterface;
 
 extern Player gPlayer;
 
@@ -37,6 +40,8 @@ extern int gScreenSize[];
 void Project::init() {
     // Jogador seta as configurações do jogo
     gPlayer.setGameConfig();
+
+    SDL_Init();
 
     // Cria janela
     gWindow = SDL_CreateWindow(
@@ -75,7 +80,10 @@ void Project::init() {
                             DEFAULT_BG_COLOR[4]);
                         
     // Iniciando o módulo de imagens
-    IMG_Init(IMG_INIT_PNG);
+    if(IMG_Init(IMG_INIT_PNG) == nullptr) {
+        std::cout << "[!] Failed to initialize image module...\n";
+        throw -1;
+    }
 
     std::cout << "[] Image module initialized...\n";
 
@@ -88,6 +96,13 @@ void Project::init() {
     
     if(!openedAimTexture) std::cout << "[!] Could not open ball aim texture!\n";
     else std::cout << "[] Ball aim texture opened...\n";
+
+    gUserInterface.init();
+
+    if(TTF_Init() != nullptr) {
+        std::cout << "[!] Failed to initialize font module...\n";
+        throw -1;
+    }
 
 }
 
@@ -104,16 +119,19 @@ void Project::close() {
     
     SDL_Quit();
     IMG_Quit();
+    TTF_Quit();
 }
 
 // -------------------------------------------------------------------------
 
 void Project::renderAll() {
-    gMovement.process();
-    std::cout << "[] Movement events processed...\n";
+    if(gIsPlaying) {
+        gMovement.process();
+        std::cout << "[] Movement events processed...\n";
 
-    gCollision.process();
-    std::cout << "[] Collision events processed...\n";
+        gCollision.process();
+        std::cout << "[] Collision events processed...\n";
+    }
 
     SDL_SetRenderDrawColor(gRenderer,
                             DEFAULT_BG_COLOR[0],
@@ -132,6 +150,8 @@ void Project::renderAll() {
     gAim.aim();
 
     if(gAiming) gPlayer.drawLine();
+
+    gUserInterface.render();
 
     SDL_RenderPresent(gRenderer);
     std::cout << "[] Rendered present...\n";
