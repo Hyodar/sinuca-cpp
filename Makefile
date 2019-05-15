@@ -43,3 +43,4 @@ clean:
 	-rm -f $(BUILD_DIR)/utils/classes/MovementSystem/*.cpp.o
 	-rm -f $(BUILD_DIR)/utils/classes/Player/*.cpp.o
 	-rm -f $(BUILD_DIR)/utils/classes/Project/*.cpp.o
+	-rm -f $(BUILD_DIR)/utils/classes/ImgTexture/*.cpp.o
