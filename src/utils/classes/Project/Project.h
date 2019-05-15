@@ -5,11 +5,16 @@
 class Project
 {
     public:
+        void configWindow();
+
         void init();
 
         void close();
 
         void renderAll();
+
+    private:
+        void processGameConfig(std::vector<std::string> inputs);
 };
 
 #endif

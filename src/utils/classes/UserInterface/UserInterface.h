@@ -5,16 +5,16 @@
 // botao de pause
 // botao de play
 
-#include "../../../include/constants.h"
+extern int gScreenSize[];
 
 class UserInterface
 {
     public:
 
-        const int menuPos[] = {gScreenSize[0] - UI_WIDTH, gScreenSize[1] - UI_HEIGHT};
+        const int menuPos[2] = {gScreenSize[0] - UI_WIDTH, gScreenSize[1] - UI_HEIGHT};
         
-        const int pausePos[] = {this->menuPos[0] + BUTTON_SIZE, this->menuPos[1] + BUTTON_SIZE};
-        const int playPos[] = {this->menuPos[0] + BUTTON_SIZE + 10, this->menuPos[1] + BUTTON_SIZE};
+        const int pausePos[2] = {this->menuPos[0] + BUTTON_SIZE, this->menuPos[1] + BUTTON_SIZE};
+        const int playPos[2] = {this->menuPos[0] + 2*BUTTON_SIZE + 10, this->menuPos[1] + BUTTON_SIZE};
 
         void init();
 

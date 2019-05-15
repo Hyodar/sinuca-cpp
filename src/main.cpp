@@ -34,6 +34,11 @@ bool gAiming = false;
 
 ImgTexture gBalImgTexture; // textura da img da bola
 ImgTexture gBallAimTexture; // textura da img da mira
+ImgTexture gPlayBtnTexture;
+ImgTexture gPauseBtnTexture;
+
+TTF_Font* gFont;
+TTF_Font* gFontBig;
 
 // mantem o ultimo clique e a posicao do mouse pra usos variados
 int gMouseClickX;

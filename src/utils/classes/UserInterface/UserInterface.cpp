@@ -1,10 +1,12 @@
 
-#include <STD.h>
-#include <STD_image.h>
+#include <SDL.h>
+#include <SDL_image.h>
 
-#include "../../../include/constants.h"
+#include <iostream>
 
 #include "../ImgTexture/ImgTexture.h"
+
+#include "../../../include/constants.h"
 
 #include "UserInterface.h"
 
@@ -19,7 +21,11 @@ extern ImgTexture gPauseBtnTexture;
 extern int gMouseClickX;
 extern int gMouseClickY;
 
-
+/*
+extern int UI_WIDTH;
+extern int UI_HEIGHT;
+extern int BUTTON_SIZE;
+*/
 // -----------------------------------------------------------------------
 
 void UserInterface::init() {
@@ -36,6 +42,7 @@ void UserInterface::render() {
 
     SDL_Rect menu = {this->menuPos[0], this->menuPos[1], UI_WIDTH, UI_HEIGHT};
 
+    // Renderizacao do menu e botoes
     SDL_RenderFillRect(gRenderer, &menu);
 
     this->renderPause();
@@ -46,10 +53,12 @@ void UserInterface::render() {
 
 bool UserInterface::checkClicks() {
     if(this->clickedPause()) {
+        std::cout << "[] Player clicked play...\n";
         gIsPlaying = false;
         return true;
     }
     if(this->clickedPlay()) {
+        std::cout << "[] Player clicked pause...\n";
         gIsPlaying = true;
         return true;
     }

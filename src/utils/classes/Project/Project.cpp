@@ -4,6 +4,7 @@
 #include <SDL_ttf.h>
 
 #include <iostream>
+#include <string>
 #include <vector>
 
 #include "../../../include/constants.h"
@@ -22,6 +23,10 @@ extern SDL_Renderer* gRenderer;
 
 extern ImgTexture gBalImgTexture;
 extern ImgTexture gBallAimTexture;
+
+extern TTF_Font* gFont;
+extern TTF_Font* gFontBig;
+
 extern bool gAiming;
 
 extern MovementSystem gMovement;
@@ -33,21 +38,134 @@ extern Player gPlayer;
 extern std::vector<Ball> gBalls;
 extern Ball gAim;
 
+extern bool gIsPlaying;
+
 extern int gScreenSize[];
 
 // -------------------------------------------------------------------------
 
-void Project::init() {
-    // Jogador seta as configurações do jogo
-    gPlayer.setGameConfig();
+void Project::configWindow() {
 
-    SDL_Init();
+    gWindow = SDL_CreateWindow(
+                    DEFAULT_WINDOW_NAME,
+                    SDL_WINDOWPOS_CENTERED,
+                    SDL_WINDOWPOS_CENTERED,
+                    DEFAULT_CONFIG_WINDOW_WIDTH,
+                    DEFAULT_CONFIG_WINDOW_HEIGHT,
+                    SDL_WINDOW_SHOWN);
+
+    gRenderer = SDL_CreateRenderer(
+                    gWindow,
+                    -1,
+                    SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
+                );
+
+    SDL_SetRenderDrawColor(gRenderer,
+                            DEFAULT_BG_COLOR[0],
+                            DEFAULT_BG_COLOR[1],
+                            DEFAULT_BG_COLOR[2],
+                            DEFAULT_BG_COLOR[4]);
+
+    SDL_RenderClear(gRenderer);
+
+    std::cout << "Setting up config window...\n";
+
+    bool quit = false;
+    SDL_Event e;
+
+    std::string inputText = "";
+    int inputCount = 0;
+    std::vector <std::string> inputs;
+    
+    ImgTexture textbox;
+
+    SDL_StartTextInput();
+
+    while(!quit) {
+        while(SDL_PollEvent(&e) != 0) {
+            switch(e.type) {
+                case SDL_KEYDOWN:
+                    if((e.key.keysym.sym == SDLK_BACKSPACE) && inputText.length() > 0) {
+                        inputText.pop_back();
+                        break;
+                    }
+                    if(e.key.keysym.sym == SDLK_RETURN || e.key.keysym.sym == SDLK_KP_ENTER) {
+                        inputs.push_back(inputText);
+                        inputText = "";
+                        ++inputCount;
+
+                        if(inputCount == 3) {
+                            quit = true;
+                        }
+                    }
+                    break;
+                case SDL_TEXTINPUT:
+                    inputText += e.text.text;
+                    break;
+                case SDL_QUIT:
+                    quit = true;
+                    break;
+            }
+        }
+        SDL_RenderClear(gRenderer);
+        if(inputText != "") {
+            SDL_RenderDrawRect(gRenderer, NULL);
+            textbox.updateText(30, 30, gFontBig, inputText, WHITE);
+        }
+        std::cout << inputText << "\n";
+
+        SDL_Delay(10);
+    }
+
+    SDL_DestroyRenderer(gRenderer);
+    SDL_DestroyWindow(gWindow);
+
+    this->processGameConfig(inputs);
+}
+
+// -------------------------------------------------------------------------
+
+void Project::processGameConfig(std::vector<std::string> inputs) {
+
+    int screenW = std::stoi(inputs[0]);
+    int screenH = std::stoi(inputs[1]);
+    int nBalls = std::stoi(inputs[2]);
+
+    if(screenW < UI_WIDTH) {
+        std::cout << "[!] Invalid width input - using default value...\n";
+        screenW = DEFAULT_SCREEN_WIDTH;
+    }
+
+    if(screenH < UI_HEIGHT) {
+        std::cout << "[!] Invalid height input - using default value...\n";
+        screenH = DEFAULT_SCREEN_HEIGHT;
+    }
+
+    gScreenSize[0] = screenW;
+    gScreenSize[1] = screenH;
+    gPlayer.randomBalls(nBalls);
+}
+
+// -------------------------------------------------------------------------
+
+void Project::init() {
+
+    TTF_Init();
+
+    gFont = TTF_OpenFont("resources/fonts/OpenSans-Regular.ttf", DEFAULT_FONT_SIZE);
+    gFontBig = TTF_OpenFont("resources/fonts/OpenSans-Regular.ttf", DEFAULT_FONT_SIZE_BIG);
+    std::cout << "[] Loaded OpenSans...\n";
+
+    this->configWindow();
+
+    // Jogador seta as configurações do jogo
+    //gPlayer.setGameConfig();
 
     // Cria janela
     gWindow = SDL_CreateWindow(
                     DEFAULT_WINDOW_NAME,
-                    SDL_WINDOWPOS_UNDEFINED,
-                    SDL_WINDOWPOS_UNDEFINED,
+                    SDL_WINDOWPOS_CENTERED,
+                    SDL_WINDOWPOS_CENTERED,
                     gScreenSize[0],
                     gScreenSize[1],
                     SDL_WINDOW_SHOWN);
@@ -55,10 +173,9 @@ void Project::init() {
     if(!gWindow) {
         std::cout << "[!] Error while creating window: " << SDL_GetError();
         throw -1;
-    } else {
-        std::cout << "[] Window initialized...\n";
     }
-
+    std::cout << "[] Window initialized...\n";
+    
     // Cria renderer
     gRenderer = SDL_CreateRenderer(
                     gWindow,
@@ -68,9 +185,8 @@ void Project::init() {
     if(!gRenderer) {
         std::cout << "[!] Error while creating renderer: " << SDL_GetError();
         throw -1;
-    } else {
-        std::cout << "[] Renderer initialized...\n";
     }
+    std::cout << "[] Renderer initialized...\n";
 
     // Cor da background
     SDL_SetRenderDrawColor(gRenderer,
@@ -80,7 +196,7 @@ void Project::init() {
                             DEFAULT_BG_COLOR[4]);
                         
     // Iniciando o módulo de imagens
-    if(IMG_Init(IMG_INIT_PNG) == nullptr) {
+    if(IMG_Init(IMG_INIT_PNG) == NULL) {
         std::cout << "[!] Failed to initialize image module...\n";
         throw -1;
     }
@@ -98,11 +214,6 @@ void Project::init() {
     else std::cout << "[] Ball aim texture opened...\n";
 
     gUserInterface.init();
-
-    if(TTF_Init() != nullptr) {
-        std::cout << "[!] Failed to initialize font module...\n";
-        throw -1;
-    }
 
 }
 
@@ -146,6 +257,12 @@ void Project::renderAll() {
         ball.render();
     }
     std::cout << "[] Rendered new ball positions...\n";
+
+    if(!gIsPlaying) {
+        ImgTexture textPaused;
+        textPaused.loadText("Paused", gFontBig, WHITE);
+        textPaused.render(gScreenSize[0]/2 - textPaused.width/2, gScreenSize[1]/2 - textPaused.height/2);
+    }
 
     gAim.aim();
 

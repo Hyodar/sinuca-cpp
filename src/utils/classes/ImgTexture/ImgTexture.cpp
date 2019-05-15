@@ -1,6 +1,7 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 
 #include <iostream>
 #include <string>
@@ -8,11 +9,12 @@
 #include "./ImgTexture.h"
 
 extern SDL_Renderer* gRenderer;
+extern TTF_Font* gFont;
 
 // ------------------------------------------------------------------
 
 ImgTexture::ImgTexture() {
-    this->sdImgTexture = nullptr;
+    this->sdltexture = nullptr;
     
     this->width = 0;
     this->height = 0;
@@ -27,10 +29,10 @@ ImgTexture::~ImgTexture() {
 // --------------------------------------------------------------------
 
 void ImgTexture::free() {
-    if(this->sdImgTexture != nullptr) {
+    if(this->sdltexture != nullptr) {
         
-        SDL_DestroyTexture(this->sdImgTexture);
-        this->sdImgTexture = nullptr;
+        SDL_DestroyTexture(this->sdltexture);
+        this->sdltexture = nullptr;
         
         this->width = 0;
         this->height = 0;
@@ -69,20 +71,54 @@ bool ImgTexture::loadImg(std::string path) {
         SDL_FreeSurface(loadedSurface);
     }
 
-    this->sdImgTexture = newTexture;
-    return this->sdImgTexture != nullptr;
+    this->sdltexture = newTexture;
+    return this->sdltexture != nullptr;
+}
+
+// ---------------------------------------------------------------------
+
+bool ImgTexture::loadText(std::string text, TTF_Font* font, SDL_Color textColor) {
+    this->free();
+
+    SDL_Texture* newTexture = nullptr;
+
+    SDL_Surface* textSurface = TTF_RenderText_Solid(font, text.c_str(), textColor);
+
+    if(textSurface != nullptr) {
+        newTexture = SDL_CreateTextureFromSurface(gRenderer, textSurface);
+
+        if(newTexture == nullptr) {
+            std::cout << "Unable to create texture from text! Error: " << SDL_GetError() << "\n";
+        }
+        else {
+            this->width = textSurface->w;
+            this->height = textSurface->h;
+        }
+
+        SDL_FreeSurface(textSurface);
+    }
+
+    this->sdltexture = newTexture;
+    return newTexture != nullptr;
+}
+
+// ---------------------------------------------------------------------
+
+void ImgTexture::updateText(int posX, int posY, TTF_Font* font, std::string text, SDL_Color textColor) {
+    this->loadText(text, font, textColor);
+    this->render(posX, posY);
 }
 
 // ---------------------------------------------------------------------
 
 void ImgTexture::setColor(Uint8 red, Uint8 green, Uint8 blue) {
-    SDL_SetTextureColorMod(this->sdImgTexture, red, green, blue);
+    SDL_SetTextureColorMod(this->sdltexture, red, green, blue);
 }
 
 // ---------------------------------------------------------------------
 
 void ImgTexture::setBlendMode(SDL_BlendMode blending) {
-    SDL_SetTextureBlendMode(this->sdImgTexture, blending);
+    SDL_SetTextureBlendMode(this->sdltexture, blending);
 }
 
 // ---------------------------------------------------------------------
@@ -97,7 +133,7 @@ void ImgTexture::render(int posX, int posY, SDL_Rect* clip, double angle,
         renderQuad.h = clip->h;
     }
 
-    SDL_RenderCopyEx(gRenderer, this->sdImgTexture, clip, &renderQuad,
+    SDL_RenderCopyEx(gRenderer, this->sdltexture, clip, &renderQuad,
                     angle, center, flip);
 }
 
