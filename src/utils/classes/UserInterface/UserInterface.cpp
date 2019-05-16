@@ -4,19 +4,19 @@
 
 #include <iostream>
 
+#include "../Player/Player.h"
 #include "../ImgTexture/ImgTexture.h"
 
 #include "../../../include/constants.h"
 
 #include "UserInterface.h"
 
+extern Player gPlayer;
+
 extern bool gIsPlaying;
 extern int gScreenSize[];
 
 extern SDL_Renderer* gRenderer;
-
-extern ImgTexture gPlayBtnTexture;
-extern ImgTexture gPauseBtnTexture;
 
 extern int gMouseClickX;
 extern int gMouseClickY;
@@ -29,8 +29,9 @@ extern int BUTTON_SIZE;
 // -----------------------------------------------------------------------
 
 void UserInterface::init() {
-    gPlayBtnTexture.loadImg("resources/images/playbtn.png");
-    gPauseBtnTexture.loadImg("resources/images/pausebtn.png");
+    this->playBtnTexture.loadImg("resources/images/playbtn.png");
+    this->pauseBtnTexture.loadImg("resources/images/pausebtn.png");
+    this->replayBtnTexture.loadImg("resources/images/replaybtn.png");
 }
 
 // -----------------------------------------------------------------------
@@ -47,6 +48,7 @@ void UserInterface::render() {
 
     this->renderPause();
     this->renderPlay();
+    this->renderReplay();
 }
 
 // ------------------------------------------------------------------------
@@ -56,10 +58,13 @@ void UserInterface::updatePositions() {
     this->menuPos[1] = gScreenSize[1] - UI_HEIGHT;
 
     this->pausePos[0] = this->menuPos[0] + BUTTON_SIZE;
-    this->pausePos[1] = this->menuPos[1] + BUTTON_SIZE;
+    this->pausePos[1] = this->menuPos[1] + BUTTON_SIZE/2;
 
-    this->playPos[0] = this->menuPos[0] + 2*BUTTON_SIZE + UI_PADDING[2];
-    this->playPos[1] = this->menuPos[1] + BUTTON_SIZE;
+    this->playPos[0] = this->pausePos[0] + BUTTON_SIZE +UI_PADDING;
+    this->playPos[1] = this->pausePos[1];
+
+    this->replayPos[0] = this->playPos[0] + BUTTON_SIZE + UI_PADDING;
+    this->replayPos[1] = this->pausePos[1];
 }
 
 // ------------------------------------------------------------------------
@@ -75,19 +80,30 @@ bool UserInterface::checkClicks() {
         gIsPlaying = true;
         return true;
     }
+    if(this->clickedReplay()){
+        std::cout << "[] Player clicked replay...\n";
+        gPlayer.resetGame();
+        return true;
+    }
     return false;
 }
 
 // ------------------------------------------------------------------------
 
 void UserInterface::renderPause() {
-    gPauseBtnTexture.render(this->pausePos[0], this->pausePos[1]);
+    this->pauseBtnTexture.render(this->pausePos[0], this->pausePos[1]);
 }
 
 // ------------------------------------------------------------------------
 
 void UserInterface::renderPlay() {
-    gPlayBtnTexture.render(this->playPos[0], this->playPos[1]);
+    this->playBtnTexture.render(this->playPos[0], this->playPos[1]);
+}
+
+// ------------------------------------------------------------------------
+
+void UserInterface::renderReplay() {
+    this->replayBtnTexture.render(this->replayPos[0], this->replayPos[1]);
 }
 
 // ------------------------------------------------------------------------
@@ -106,6 +122,15 @@ bool UserInterface::clickedPlay() {
            gMouseClickX <= (this->playPos[0] + BUTTON_SIZE) &&
            gMouseClickY >= this->playPos[1] &&
            gMouseClickY <= (this->playPos[1] + BUTTON_SIZE);
+}
+
+// ------------------------------------------------------------------------
+
+bool UserInterface::clickedReplay() {
+    return gMouseClickX >= this->replayPos[0] &&
+           gMouseClickX <= (this->replayPos[0] + BUTTON_SIZE) &&
+           gMouseClickY >= this->replayPos[1] &&
+           gMouseClickY <= (this->replayPos[1] + BUTTON_SIZE);
 }
 
 // ------------------------------------------------------------------------

@@ -14,7 +14,9 @@ class Project
         void renderAll();
 
     private:
+
         void processGameConfig(std::vector<std::string> inputs);
+        
 };
 
 #endif

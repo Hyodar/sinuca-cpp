@@ -37,6 +37,7 @@ extern Player gPlayer;
 
 extern std::vector<Ball> gBalls;
 extern Ball gAim;
+extern int gNBallsStart;
 
 extern bool gIsPlaying;
 
@@ -142,7 +143,7 @@ void Project::processGameConfig(std::vector<std::string> inputs) {
 
     int screenW = std::stoi(inputs[0]);
     int screenH = std::stoi(inputs[1]);
-    int nBalls = std::stoi(inputs[2]);
+    gNBallsStart = std::stoi(inputs[2]);
 
     if(screenW < UI_WIDTH) {
         std::cout << "[!] Invalid width input - using default value...\n";
@@ -156,7 +157,7 @@ void Project::processGameConfig(std::vector<std::string> inputs) {
 
     gScreenSize[0] = screenW;
     gScreenSize[1] = screenH;
-    gPlayer.randomBalls(nBalls);
+    gPlayer.randomBalls(gNBallsStart);
 }
 
 // -------------------------------------------------------------------------

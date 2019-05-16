@@ -31,11 +31,10 @@ UserInterface gUserInterface;
 std::vector<Ball> gBalls; // vetor das bolas presentes
 Ball gAim; // cursor do mouse
 bool gAiming = false;
+int gNBallsStart;
 
 ImgTexture gBalImgTexture; // textura da img da bola
 ImgTexture gBallAimTexture; // textura da img da mira
-ImgTexture gPlayBtnTexture;
-ImgTexture gPauseBtnTexture;
 
 TTF_Font* gFont;
 TTF_Font* gFontBig;

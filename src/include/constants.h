@@ -4,9 +4,9 @@
 const int DEFAULT_MIN_X = 0;
 const int DEFAULT_MIN_Y = 0;
 
-const int UI_WIDTH = 160;
+const int UI_WIDTH = 220;
 const int UI_HEIGHT = 70;
-const int UI_PADDING[] = {20, 20, 20, 20}; // left top right bottom
+const int UI_PADDING = 20; // left top right bottom
 
 const int DEFAULT_FONT_SIZE = 16;
 const int DEFAULT_FONT_SIZE_BIG = 24;

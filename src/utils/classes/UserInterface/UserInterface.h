@@ -11,10 +11,11 @@ class UserInterface
 {
     public:
 
-        int menuPos[2] = {gScreenSize[0] - UI_WIDTH, gScreenSize[1] - UI_HEIGHT};
+        int menuPos[2];
         
-        int pausePos[2] = {this->menuPos[0] + BUTTON_SIZE, this->menuPos[1] + BUTTON_SIZE};
-        int playPos[2] = {this->menuPos[0] + 2*BUTTON_SIZE + 10, this->menuPos[1] + BUTTON_SIZE};
+        int pausePos[2];
+        int playPos[2];
+        int replayPos[2];
 
         void init();
 
@@ -25,14 +26,22 @@ class UserInterface
         bool clickedPause();
 
         bool clickedPlay();
+        
+        bool clickedReplay();
 
         bool checkClicks();
 
     private:
 
+        ImgTexture playBtnTexture;
+        ImgTexture pauseBtnTexture;
+        ImgTexture replayBtnTexture;
+
         void renderPause();
 
         void renderPlay();
+
+        void renderReplay();
 };
 
 #endif

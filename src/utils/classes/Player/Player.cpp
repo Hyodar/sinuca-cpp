@@ -13,7 +13,12 @@
 #include "Player.h"
 
 extern SDL_Renderer* gRenderer;
+
 extern std::vector<Ball> gBalls;
+extern int gNBallsStart;
+
+extern bool gIsPlaying;
+
 extern int gScreenSize[];
 extern int gMinPoint[];
 
@@ -46,8 +51,8 @@ void Player::randomBalls(int nBalls) {
     srand(time(NULL));
 
     for(int i=0; i<nBalls; i++) {
-        Ball ball  ((rand() % (gScreenSize[0] - gMinPoint[0])) + gMinPoint[0],
-                    (rand() % (gScreenSize[1] - gMinPoint[1])) + gMinPoint[1],
+        Ball ball  ((rand() % (gScreenSize[0] - gMinPoint[0] - BALL_DIAMETER)) + gMinPoint[0],
+                    (rand() % (gScreenSize[1] - gMinPoint[1] - BALL_DIAMETER)) + gMinPoint[1],
                     (rand() % 4*DEFAULT_RAND_VEL_RNG) - 2*DEFAULT_RAND_VEL_RNG,
                     (rand() % 4*DEFAULT_RAND_VEL_RNG) - 2*DEFAULT_RAND_VEL_RNG);
         addToVector(ball);
@@ -63,19 +68,26 @@ void Player::addBall() {
 
 // -----------------------------------------------------------------------
 
-void Player::addToVector(Ball& ball) {
-    gBalls.push_back(ball);
-}
-
-// -----------------------------------------------------------------------
-
 void Player::drawLine() {
     SDL_SetRenderDrawColor(gRenderer,
                             DEFAULT_LINE_COLOR[0],
                             DEFAULT_LINE_COLOR[1],
                             DEFAULT_LINE_COLOR[2],
                             DEFAULT_LINE_COLOR[3]);
-    SDL_RenderDrawLine(gRenderer, gMouseClickX, gMouseClickY, gMouseMotionX, gMouseMotionY); // FIXME!
+    SDL_RenderDrawLine(gRenderer, gMouseClickX, gMouseClickY, gMouseMotionX, gMouseMotionY);
+}
+// -----------------------------------------------------------------------
+
+void Player::resetGame() {
+    gBalls.clear();
+    gIsPlaying = false;
+    this->randomBalls(gNBallsStart);
+}
+// -----------------------------------------------------------------------
+
+void Player::addToVector(Ball& ball) {
+    gBalls.push_back(ball);
 }
 
 // -----------------------------------------------------------------------
+

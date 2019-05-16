@@ -17,6 +17,8 @@ class Player
         void randomBalls(int n);
 
         void drawLine();
+
+        void resetGame();
     
     private:
         void addToVector(Ball& b);
