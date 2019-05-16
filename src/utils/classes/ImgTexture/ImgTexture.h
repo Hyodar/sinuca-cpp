@@ -42,4 +42,4 @@ class ImgTexture
 
 };
 
-#endif
+#endif // IMGTEX_H_

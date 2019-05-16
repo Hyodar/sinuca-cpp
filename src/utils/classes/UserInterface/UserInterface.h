@@ -44,4 +44,4 @@ class UserInterface
         void renderReplay();
 };
 
-#endif
+#endif // UI_H_

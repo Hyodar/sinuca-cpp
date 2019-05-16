@@ -56,8 +56,7 @@ bool ImgTexture::loadImg(std::string path) {
         
         SDL_SetColorKey(loadedSurface,
                         SDL_TRUE,
-                        SDL_MapRGB(loadedSurface->format,
-                                    0, 0xFF, 0xFF));
+                        SDL_MapRGB(loadedSurface->format, 0, 0xFF, 0xFF));
 
         newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
 
@@ -138,6 +137,3 @@ void ImgTexture::render(int posX, int posY, SDL_Rect* clip, double angle,
 }
 
 // ---------------------------------------------------------------------
-
-
-

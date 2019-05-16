@@ -5,10 +5,12 @@
 class CollisionSystem
 {
     public:
+
         void process();
 
     private:
+    
         void checkAllCollisions();
 };
 
-#endif
+#endif // COLL_H_

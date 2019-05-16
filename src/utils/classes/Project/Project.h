@@ -5,6 +5,7 @@
 class Project
 {
     public:
+
         void configWindow();
 
         void init();
@@ -19,4 +20,4 @@ class Project
         
 };
 
-#endif
+#endif // PROJ_H_

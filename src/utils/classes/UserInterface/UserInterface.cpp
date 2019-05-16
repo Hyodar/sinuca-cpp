@@ -21,11 +21,6 @@ extern SDL_Renderer* gRenderer;
 extern int gMouseClickX;
 extern int gMouseClickY;
 
-/*
-extern int UI_WIDTH;
-extern int UI_HEIGHT;
-extern int BUTTON_SIZE;
-*/
 // -----------------------------------------------------------------------
 
 void UserInterface::init() {

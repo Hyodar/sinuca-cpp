@@ -13,8 +13,8 @@ class Ball
         double vY = 0;
         
         // distancia entre outra, para colisoes
-        int dx = 0;
-        int dy = 0;
+        double dx = 0;
+        double dy = 0;
         
         Ball(int posX, int posY, double vX, double vY);
         

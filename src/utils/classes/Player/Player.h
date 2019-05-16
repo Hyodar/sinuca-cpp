@@ -21,7 +21,8 @@ class Player
         void resetGame();
     
     private:
+
         void addToVector(Ball& b);
 };
 
-#endif
+#endif // PLAYER_H_

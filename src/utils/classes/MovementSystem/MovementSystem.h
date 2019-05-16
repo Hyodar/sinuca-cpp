@@ -7,10 +7,12 @@
 class MovementSystem
 {
     public:
+    
         void process();
 
     private:
+
         void moveBall(Ball& ball);
 };
 
-#endif
+#endif // MOV_H_

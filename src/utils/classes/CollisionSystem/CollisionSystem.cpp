@@ -29,3 +29,5 @@ void CollisionSystem::checkAllCollisions() {
         gBalls[i].wallCollision();
     }
 }
+
+// -----------------------------------------------------------------------------
