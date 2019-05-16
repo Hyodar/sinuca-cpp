@@ -6,10 +6,11 @@ class Ball
 {
     public:
 
-        int posX = 0;
-        int posY = 0;
-        float vX = 0;
-        float vY = 0;
+        // as posicoes sao tomadas como double, mas no render viram int
+        double posX = 0;
+        double posY = 0;
+        double vX = 0;
+        double vY = 0;
         
         // distancia entre outra, para colisoes
         int dx = 0;
@@ -35,13 +36,13 @@ class Ball
 
     private:
     
-        float collisionAngle(Ball& ball2);
+        double collisionAngle(Ball& ball2);
 
         void getDelta(Ball& ball2);
 
-        float getCenterDistance(int dx, int dy);
+        double getCenterDistance(int dx, int dy);
 
-        void unstuck(Ball& ball2, float sin, float cos);
+        void unstuck(Ball& ball2, double sin, double cos);
 
         void ballCollision(Ball& ball2);
 

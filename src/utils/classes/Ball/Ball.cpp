@@ -40,7 +40,7 @@ Ball::Ball(int posX, int posY, int vX, int vY) {
 // -----------------------------------------------------------------------------
 
 void Ball::render() {
-    gBalImgTexture.render(this->posX, this->posY);
+    gBalImgTexture.render(round(this->posX), round(this->posY));
 }
 
 // -----------------------------------------------------------------------------
@@ -95,7 +95,7 @@ int Ball::vSignY() {
 
 // -------------------------------------------------------------------------------
 
-float Ball::collisionAngle(Ball& ball2) {
+double Ball::collisionAngle(Ball& ball2) {
     return atan2(this->dy, this->dx);
 }
 
@@ -108,20 +108,18 @@ void Ball::getDelta(Ball& ball2) {
 
 // -------------------------------------------------------------------------------
 
-float Ball::getCenterDistance(int dx, int dy) {
+double Ball::getCenterDistance(int dx, int dy) {
     return sqrt(dx*dx + dy*dy);
 }
 
 // -------------------------------------------------------------------------------
 
-void Ball::unstuck(Ball& ball2, float sinTheta, float cosTheta) {
-    // Testando
+void Ball::unstuck(Ball& ball2, double sinTheta, double cosTheta) {
 
-    // Solução 1: 
-    float intersec = BALL_DIAMETER - this->getCenterDistance(this->dx, this->dy);
+    double intersec = BALL_DIAMETER - this->getCenterDistance(this->dx, this->dy);
 
-    int moveX = ceil(intersec*cosTheta/2);
-    int moveY = ceil(intersec*sinTheta/2);
+    double moveX = intersec*cosTheta/2;
+    double moveY = intersec*sinTheta/2;
 
     this->posX += moveX;
     this->posY += moveY;
@@ -130,14 +128,14 @@ void Ball::unstuck(Ball& ball2, float sinTheta, float cosTheta) {
     ball2.posY -= moveY;
 
    /*
-    // talvez isso n funcione
-    float posX1 = this->posX*cosTheta + this->posY*sinTheta;
-    float posX2 = ball2.posX*cosTheta + ball2.posY*sinTheta;
+    // isso n deve estar funcionando
+    double posX1 = this->posX*cosTheta + this->posY*sinTheta;
+    double posX2 = ball2.posX*cosTheta + ball2.posY*sinTheta;
 
-    float posY1 = -this->posX*sinTheta + this->posY*cosTheta;
-    float posY2 = -ball2.posX*sinTheta + ball2.posY*cosTheta;
+    double posY1 = -this->posX*sinTheta + this->posY*cosTheta;
+    double posY2 = -ball2.posX*sinTheta + ball2.posY*cosTheta;
 
-    float intersec = BALL_DIAMETER - (posX2 - posX1);
+    double intersec = BALL_DIAMETER - (posX2 - posX1);
 
     posX1 += ceil(intersec/2);
     posX2 -= ceil(intersec/2);
@@ -154,19 +152,19 @@ void Ball::unstuck(Ball& ball2, float sinTheta, float cosTheta) {
 
 void Ball::ballCollision(Ball& ball2) {
 
-    float theta = this->collisionAngle(ball2);
+    double theta = this->collisionAngle(ball2);
 
-    float sinTheta = sin(theta);
-    float cosTheta = cos(theta);
+    double sinTheta = sin(theta);
+    double cosTheta = cos(theta);
 
     this->unstuck(ball2, sinTheta, cosTheta);
     
     // rotacionando o eixo pra fazer uma colisao 1D
-    float vx1 = this->vX*cosTheta + this->vY*sinTheta;
-    float vx2 = ball2.vX*cosTheta + ball2.vY*sinTheta;
+    double vx1 = this->vX*cosTheta + this->vY*sinTheta;
+    double vx2 = ball2.vX*cosTheta + ball2.vY*sinTheta;
 
-    float vy1 = -this->vX*sinTheta + this->vY*cosTheta;
-    float vy2 = -ball2.vX*sinTheta + ball2.vY*cosTheta;
+    double vy1 = -this->vX*sinTheta + this->vY*cosTheta;
+    double vy2 = -ball2.vX*sinTheta + ball2.vY*cosTheta;
 
     std::swap(vx1, vx2); // colisao 1D, eixo y' nao interfere
 

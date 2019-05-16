@@ -22,8 +22,8 @@ void MovementSystem::process() {
 // ----------------------------------------------------------------------------
 
 void MovementSystem::moveBall(Ball& ball) {
-    ball.posX += round(ball.vX);
-    ball.posY += round(ball.vY);
+    ball.posX += ball.vX;
+    ball.posY += ball.vY;
 
     ball.posX = std::max(ball.posX, gMinPoint[0]);
     ball.posY = std::max(ball.posY, gMinPoint[1]);

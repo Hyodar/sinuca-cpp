@@ -21,7 +21,7 @@ const int DEFAULT_CONFIG_WINDOW_HEIGHT = 350;
 const int BALL_RADIUS = 35;
 const int BALL_DIAMETER = 70;
 
-const float PINCH_FACTOR = 35;
+const double PINCH_FACTOR = 35;
 const int DEFAULT_RAND_VEL_RNG = 4;
 
 const char DEFAULT_WINDOW_NAME[] = "Sinuca++";
