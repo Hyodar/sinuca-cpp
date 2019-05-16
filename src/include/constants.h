@@ -29,7 +29,7 @@ const char DEFAULT_WINDOW_NAME[] = "Sinuca++";
 const int DEFAULT_BG_COLOR[] = {0x22, 0x5C, 0x28, 0xFF};
 const int DEFAULT_LINE_COLOR[] = {0xFF, 0xFF, 0xFF, 0xFF};
 
-const int BUTTON_SIZE = 30;
+const int BUTTON_SIZE = 36;
 
 const SDL_Color WHITE = {0xFF, 0xFF, 0xFF, 0xFF};
 const SDL_Color BLACK = {0, 0, 0, 0xFF};
