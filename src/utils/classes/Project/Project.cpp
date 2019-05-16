@@ -76,8 +76,13 @@ void Project::configWindow() {
     std::string inputText = "";
     int inputCount = 0;
     std::vector <std::string> inputs;
+    std::vector <std::string> questions = {"Insira a largura em px: ",
+                                         "Insira a altura em px: ",
+                                         "Insira o número de bolas inicial: ",
+                                         ""};
     
     ImgTexture textbox;
+    ImgTexture questionText;
 
     SDL_StartTextInput();
 
@@ -90,8 +95,10 @@ void Project::configWindow() {
                         break;
                     }
                     if(e.key.keysym.sym == SDLK_RETURN || e.key.keysym.sym == SDLK_KP_ENTER) {
+                        
                         inputs.push_back(inputText);
                         inputText = "";
+                        
                         ++inputCount;
 
                         if(inputCount == 3) {
@@ -108,19 +115,25 @@ void Project::configWindow() {
             }
         }
         SDL_RenderClear(gRenderer);
+        
         if(inputText != "") {
-            SDL_RenderDrawRect(gRenderer, NULL);
-            textbox.updateText(30, 30, gFontBig, inputText, WHITE);
+            textbox.updateText(150, 150, gFontBig, inputText, WHITE);
         }
-        std::cout << inputText << "\n";
+        questionText.updateText(100, 50, gFontBig, questions[inputCount], BLACK);
 
+        SDL_RenderPresent(gRenderer);
         SDL_Delay(10);
     }
 
+    end:
     SDL_DestroyRenderer(gRenderer);
     SDL_DestroyWindow(gWindow);
 
-    this->processGameConfig(inputs);
+    if(inputCount == 3) {
+        this->processGameConfig(inputs);
+    } else {
+        throw -1;
+    }
 }
 
 // -------------------------------------------------------------------------
