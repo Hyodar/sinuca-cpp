@@ -7,7 +7,6 @@
 class Player
 {
     public:
-        void setGameConfig();
         
         void addBall();
 

@@ -68,7 +68,7 @@ void Project::configWindow() {
 
     SDL_RenderClear(gRenderer);
 
-    std::cout << "Setting up config window...\n";
+    std::cout << "[] Setting up config window...\n";
 
     bool quit = false;
     SDL_Event e;
@@ -125,12 +125,12 @@ void Project::configWindow() {
         SDL_Delay(10);
     }
 
-    end:
     SDL_DestroyRenderer(gRenderer);
     SDL_DestroyWindow(gWindow);
 
     if(inputCount == 3) {
         this->processGameConfig(inputs);
+        gUserInterface.updatePositions();
     } else {
         throw -1;
     }

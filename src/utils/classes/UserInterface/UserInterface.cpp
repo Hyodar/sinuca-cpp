@@ -51,6 +51,19 @@ void UserInterface::render() {
 
 // ------------------------------------------------------------------------
 
+void UserInterface::updatePositions() {
+    this->menuPos[0] = gScreenSize[0] - UI_WIDTH;
+    this->menuPos[1] = gScreenSize[1] - UI_HEIGHT;
+
+    this->pausePos[0] = this->menuPos[0] + BUTTON_SIZE;
+    this->pausePos[1] = this->menuPos[1] + BUTTON_SIZE;
+
+    this->playPos[0] = this->menuPos[0] + 2*BUTTON_SIZE + UI_PADDING[2];
+    this->playPos[1] = this->menuPos[1] + BUTTON_SIZE;
+}
+
+// ------------------------------------------------------------------------
+
 bool UserInterface::checkClicks() {
     if(this->clickedPause()) {
         std::cout << "[] Player clicked play...\n";

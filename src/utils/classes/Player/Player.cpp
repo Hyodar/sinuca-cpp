@@ -25,46 +25,6 @@ extern int gMouseMotionY;
 
 // -----------------------------------------------------------------------
 
-void Player::setGameConfig() {
-    int nBalls;
-
-    std::cout << "Largura da tela (em px): \n";
-    std::cin >> gScreenSize[0];
-    
-    if(std::cin.fail() || gScreenSize[0] < UI_WIDTH) {
-        std::cout << "[] Invalid input - using default value...\n";
-        gScreenSize[0] = DEFAULT_SCREEN_WIDTH;
-        std::cin.clear(); // reseta a flag fail do cin
-        std::cin.ignore();
-    }
-
-    std::cout << "Altura da tela (em px): \n";
-    std::cin >> gScreenSize[1];
-
-    if(std::cin.fail() || gScreenSize[1] < UI_HEIGHT) {
-        std::cout << "[] Invalid input - using default value...\n";
-        gScreenSize[1] = DEFAULT_SCREEN_HEIGHT;
-        std::cin.clear(); // reseta a flag fail do cin
-        std::cin.ignore();
-    }
-
-    std::cout << "Numero inicial de bolas: \n";
-    std::cin >> nBalls;
-
-    if(std::cin.fail()) {
-        std::cout << "[] Invalid input - using default value...\n";
-        nBalls = DEFAULT_BALL_COUNT;
-        std::cin.clear(); // reseta a flag fail do cin
-        std::cin.ignore();
-    }
-
-    std::cout << "\n";
-
-    this->randomBalls(nBalls);
-}
-
-// -----------------------------------------------------------------------
-
 void Player::addBall(int posX, int posY, int vX, int vY) {
     Ball ball(posX, posY, vX, vY);
     addToVector(ball);

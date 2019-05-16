@@ -11,14 +11,16 @@ class UserInterface
 {
     public:
 
-        const int menuPos[2] = {gScreenSize[0] - UI_WIDTH, gScreenSize[1] - UI_HEIGHT};
+        int menuPos[2] = {gScreenSize[0] - UI_WIDTH, gScreenSize[1] - UI_HEIGHT};
         
-        const int pausePos[2] = {this->menuPos[0] + BUTTON_SIZE, this->menuPos[1] + BUTTON_SIZE};
-        const int playPos[2] = {this->menuPos[0] + 2*BUTTON_SIZE + 10, this->menuPos[1] + BUTTON_SIZE};
+        int pausePos[2] = {this->menuPos[0] + BUTTON_SIZE, this->menuPos[1] + BUTTON_SIZE};
+        int playPos[2] = {this->menuPos[0] + 2*BUTTON_SIZE + 10, this->menuPos[1] + BUTTON_SIZE};
 
         void init();
 
         void render();
+
+        void updatePositions();
 
         bool clickedPause();
 
