@@ -18,7 +18,7 @@ using namespace std;
 #include "./utils/classes/CollisionSystem/CollisionSystem.h"
 #include "./utils/classes/UserInterface/UserInterface.h"
 
-// Variaveis globais (g para indicar global)
+// Variaveis globais
 // --------------------------------------------------------------------
 
 SDL_Window *gWindow = nullptr; // janela do jogo

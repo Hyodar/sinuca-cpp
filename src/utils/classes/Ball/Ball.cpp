@@ -23,14 +23,14 @@ Ball::Ball() {}
 
 // -----------------------------------------------------------------------------
 
-Ball::Ball(int vX, int vY) {
+Ball::Ball(double vX, double vY) {
     this->vX = vX;
     this->vY = vY;
 }
 
 // -----------------------------------------------------------------------------
 
-Ball::Ball(int posX, int posY, int vX, int vY) {
+Ball::Ball(int posX, int posY, double vX, double vY) {
     this->posX = posX;
     this->posY = posY;
     this->vX = vX;
@@ -46,6 +46,7 @@ void Ball::render() {
 // -----------------------------------------------------------------------------
 
 void Ball::aim() {
+    // nesse caso, posX sempre vai ser int, a mira depende da posicao do mouse
     gBallAimTexture.render(this->posX, this->posY);
 }
 
@@ -126,26 +127,6 @@ void Ball::unstuck(Ball& ball2, double sinTheta, double cosTheta) {
 
     ball2.posX -= moveX;
     ball2.posY -= moveY;
-
-   /*
-    // isso n deve estar funcionando
-    double posX1 = this->posX*cosTheta + this->posY*sinTheta;
-    double posX2 = ball2.posX*cosTheta + ball2.posY*sinTheta;
-
-    double posY1 = -this->posX*sinTheta + this->posY*cosTheta;
-    double posY2 = -ball2.posX*sinTheta + ball2.posY*cosTheta;
-
-    double intersec = BALL_DIAMETER - (posX2 - posX1);
-
-    posX1 += ceil(intersec/2);
-    posX2 -= ceil(intersec/2);
-
-    this->posX = posX1*cosTheta - posY1*sinTheta;
-    this->posY = posX1*sinTheta + posY1*cosTheta;
-
-    ball2.posX = posX2*cosTheta - posY2*sinTheta;
-    ball2.posY = posX2*sinTheta + posY2*cosTheta;
-    */
 }
 
 // -------------------------------------------------------------------------------

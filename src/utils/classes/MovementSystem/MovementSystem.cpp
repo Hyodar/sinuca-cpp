@@ -25,8 +25,8 @@ void MovementSystem::moveBall(Ball& ball) {
     ball.posX += ball.vX;
     ball.posY += ball.vY;
 
-    ball.posX = std::max(ball.posX, gMinPoint[0]);
-    ball.posY = std::max(ball.posY, gMinPoint[1]);
+    ball.posX = (ball.posX > gMinPoint[0])? ball.posX : gMinPoint[0];
+    ball.posY = (ball.posY > gMinPoint[1])? ball.posY : gMinPoint[1];
 
     // TODO: rever isso ############################
     if(ball.posX + BALL_DIAMETER > gScreenSize[0]) {

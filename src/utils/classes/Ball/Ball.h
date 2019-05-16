@@ -16,9 +16,9 @@ class Ball
         int dx = 0;
         int dy = 0;
         
-        Ball(int posX, int posY, int vX, int vY);
+        Ball(int posX, int posY, double vX, double vY);
         
-        Ball(int vX, int vY);
+        Ball(double vX, double vY);
 
         Ball();
 

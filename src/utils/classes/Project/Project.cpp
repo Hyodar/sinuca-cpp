@@ -55,11 +55,24 @@ void Project::configWindow() {
                     DEFAULT_CONFIG_WINDOW_HEIGHT,
                     SDL_WINDOW_SHOWN);
 
+    if(!gWindow) {
+        std::cout << "[!] Error while creating window: " << SDL_GetError();
+        throw -1;
+    }
+    std::cout << "[] Window initialized...\n";
+
     gRenderer = SDL_CreateRenderer(
                     gWindow,
                     -1,
                     SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
                 );
+
+    
+    if(!gRenderer) {
+        std::cout << "[!] Error while creating renderer: " << SDL_GetError();
+        throw -1;
+    }
+    std::cout << "[] Renderer initialized...\n";
 
     SDL_SetRenderDrawColor(gRenderer,
                             DEFAULT_BG_COLOR[0],
@@ -71,19 +84,26 @@ void Project::configWindow() {
 
     std::cout << "[] Setting up config window...\n";
 
+    // --------------------------------------------------------------
+
     bool quit = false;
     SDL_Event e;
 
     std::string inputText = "";
     int inputCount = 0;
     std::vector <std::string> inputs;
-    std::vector <std::string> questions = {"Insira a largura em px: ",
-                                         "Insira a altura em px: ",
-                                         "Insira o número de bolas inicial: ",
-                                         ""};
+    std::vector <std::string> questions = {"   Insira a largura: (min 221px)  ",
+                                           "    Insira a altura: (min 71px)   ",
+                                           "Insira o numero de bolas inicial: ",
+                                           ""};
     
     ImgTexture textbox;
     ImgTexture questionText;
+
+    const int questionBoxPos[] = {75, 50};
+    const int inputBoxPos[] = {215, 100};
+
+    // --------------------------------------------------------------
 
     SDL_StartTextInput();
 
@@ -118,9 +138,11 @@ void Project::configWindow() {
         SDL_RenderClear(gRenderer);
         
         if(inputText != "") {
-            textbox.updateText(150, 150, gFontBig, inputText, WHITE);
+            if(inputCount < 2) textbox.updateText(inputBoxPos[0], inputBoxPos[1], gFontBig, inputText+" px", WHITE);
+            else textbox.updateText(inputBoxPos[0], inputBoxPos[1], gFontBig, inputText+" bola(s)", WHITE);
         }
-        questionText.updateText(100, 50, gFontBig, questions[inputCount], BLACK);
+
+        questionText.updateText(questionBoxPos[0], questionBoxPos[1], gFontBig, questions[inputCount], BLACK);
 
         SDL_RenderPresent(gRenderer);
         SDL_Delay(10);
@@ -145,19 +167,21 @@ void Project::processGameConfig(std::vector<std::string> inputs) {
     int screenH = std::stoi(inputs[1]);
     gNBallsStart = std::stoi(inputs[2]);
 
-    if(screenW < UI_WIDTH) {
+    if(screenW <= UI_WIDTH) {
         std::cout << "[!] Invalid width input - using default value...\n";
-        screenW = DEFAULT_SCREEN_WIDTH;
+        screenW = UI_WIDTH + 1;
     }
 
-    if(screenH < UI_HEIGHT) {
+    if(screenH <= UI_HEIGHT) {
         std::cout << "[!] Invalid height input - using default value...\n";
-        screenH = DEFAULT_SCREEN_HEIGHT;
+        screenH = UI_HEIGHT + 1;
     }
 
     gScreenSize[0] = screenW;
     gScreenSize[1] = screenH;
     gPlayer.randomBalls(gNBallsStart);
+
+    std::cout << "teste";
 }
 
 // -------------------------------------------------------------------------
@@ -183,24 +207,12 @@ void Project::init() {
                     gScreenSize[0],
                     gScreenSize[1],
                     SDL_WINDOW_SHOWN);
-
-    if(!gWindow) {
-        std::cout << "[!] Error while creating window: " << SDL_GetError();
-        throw -1;
-    }
-    std::cout << "[] Window initialized...\n";
     
     // Cria renderer
     gRenderer = SDL_CreateRenderer(
                     gWindow,
                     -1,
                     SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-
-    if(!gRenderer) {
-        std::cout << "[!] Error while creating renderer: " << SDL_GetError();
-        throw -1;
-    }
-    std::cout << "[] Renderer initialized...\n";
 
     // Cor da background
     SDL_SetRenderDrawColor(gRenderer,
@@ -210,7 +222,7 @@ void Project::init() {
                             DEFAULT_BG_COLOR[4]);
                         
     // Iniciando o módulo de imagens
-    if(IMG_Init(IMG_INIT_PNG) == NULL) {
+    if(!IMG_Init(IMG_INIT_PNG)) {
         std::cout << "[!] Failed to initialize image module...\n";
         throw -1;
     }
@@ -239,8 +251,8 @@ void Project::close() {
     SDL_DestroyRenderer(gRenderer);
     SDL_DestroyWindow(gWindow);
 
-    gRenderer = NULL;
-    gWindow = NULL;
+    gRenderer = nullptr;
+    gWindow = nullptr;
     
     SDL_Quit();
     IMG_Quit();
